@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#000000" />
+<meta name="description" content="Cadeia de custódia e hash de arquivos — gerador de hash no próprio navegador (o arquivo não sai do seu computador), comandos e guia." />
+<title>Cadeia de Custódia & Hash — Sistemas PCPE</title>
+<link rel="icon" href="icon/bandeiraPernambuco.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root{--black:#000;--black-soft:#0d0d0d;--panel:#141414;--panel-h:#1e1e1e;--gold:#c9a14a;--gold-light:#e0bf6d;--paper:#fff;--txt:#f2f2f2;--muted:#9a9a9a;--line:#2a2a2a;--danger:#b3261e;--ok:#3fae66}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',system-ui,Arial,sans-serif;background:var(--black-soft);color:var(--txt);min-height:100vh;padding-bottom:60px;line-height:1.55}
+  .chrome-bar{background:var(--black);display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;min-height:96px}
+  .chrome-brand{display:flex;align-items:center;gap:16px}
+  .chrome-brand img{height:60px;width:auto;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+  .chrome-brand .name{display:flex;flex-direction:column;gap:2px;color:#fff}
+  .chrome-brand .name .l1{font-weight:800;font-size:1.2rem}
+  .chrome-brand .name .l2{font-weight:400;font-size:.68rem;letter-spacing:.4em;color:#cfcfcf}
+  .back{color:var(--gold-light);text-decoration:none;font-weight:600;font-size:.85rem;border:1px solid var(--line);padding:8px 14px;border-radius:999px}
+  .back:hover{background:var(--gold);color:#000;border-color:var(--gold)}
+  .chrome-stripe{height:8px;background:var(--gold)}
+  main{max-width:900px;margin:0 auto;padding:0 18px}
+  h1{font-size:1.7rem;margin:34px 0 6px}
+  h1 .sub{display:block;font-size:.8rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px}
+  .lead{color:var(--muted);margin-bottom:8px}
+  section{margin-top:34px}
+  h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.03em;border-bottom:2px solid var(--gold);padding-bottom:8px;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+  h2 .bar{width:6px;height:20px;background:var(--gold);border-radius:2px}
+
+  /* Gerador */
+  .tool{background:var(--panel);border:1px solid rgba(201,161,74,.4);border-radius:14px;padding:20px}
+  .privacy{display:flex;align-items:center;gap:8px;color:var(--ok);font-size:.85rem;font-weight:600;margin-bottom:14px}
+  .drop{border:2px dashed var(--line);border-radius:12px;padding:30px 18px;text-align:center;cursor:pointer;transition:.15s;background:var(--black-soft)}
+  .drop:hover,.drop.over{border-color:var(--gold);background:#181510}
+  .drop strong{color:var(--gold-light)}
+  .drop .hint{color:var(--muted);font-size:.85rem;margin-top:6px}
+  .algos{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+  .algos label{font-size:.85rem;background:var(--black-soft);border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer}
+  .algos input{margin-right:6px}
+  .fileinfo{font-size:.85rem;color:var(--muted);margin:10px 0}
+  .result{margin-top:8px;display:none}
+  .result.show{display:block}
+  .hashrow{background:var(--black-soft);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-top:10px}
+  .hashrow .algo{font-size:.72rem;font-weight:800;letter-spacing:.08em;color:var(--gold-light);text-transform:uppercase}
+  .hashrow .val{font-family:ui-monospace,Consolas,monospace;font-size:.82rem;word-break:break-all;color:var(--txt);margin:4px 0}
+  .hashrow button{font-size:.75rem;background:var(--gold);color:#000;border:0;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer}
+  .hashrow button:hover{background:var(--gold-light)}
+  .progress{height:6px;background:var(--line);border-radius:4px;overflow:hidden;margin-top:12px;display:none}
+  .progress.show{display:block}
+  .progress div{height:100%;width:0;background:var(--gold);transition:width .1s}
+  .verify{margin-top:16px}
+  .verify input{width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--line);background:var(--black-soft);color:var(--txt);font-family:ui-monospace,monospace;font-size:.82rem}
+  .verify .msg{margin-top:8px;font-weight:700;font-size:.9rem}
+  .verify .msg.match{color:var(--ok)}
+  .verify .msg.nomatch{color:var(--danger)}
+
+  pre{background:var(--black-soft);border:1px solid var(--line);border-radius:10px;padding:14px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:.82rem;color:var(--gold-light);margin-top:8px}
+  ol.steps{margin:6px 0 0 20px;display:grid;gap:8px}
+  ol.steps li{padding-left:4px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:6px}
+  .cbox{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px}
+  .cbox h3{font-size:.95rem;color:var(--gold-light);margin-bottom:4px}
+  .cbox p{font-size:.85rem;color:var(--muted)}
+  footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:46px}
+  footer .stripe{height:4px;background:var(--gold);max-width:120px;margin:0 auto 14px;border-radius:2px}
+  @media(max-width:520px){.chrome-brand .name .l2{display:none}}
+</style>
+</head>
+<body>
+  <header>
+    <div class="chrome-bar">
+      <div class="chrome-brand">
+        <img src="icon/brasaoHeader.png" alt="Brasão PCPE" />
+        <div class="name"><span class="l1">SISTEMAS PCPE</span><span class="l2">POLÍCIA CIVIL DE PERNAMBUCO</span></div>
+      </div>
+      <a class="back" href="index.html">← Voltar</a>
+    </div>
+    <div class="chrome-stripe"></div>
+  </header>
+
+  <main>
+    <h1><span class="sub">Prova digital</span>Cadeia de Custódia &amp; Hash</h1>
+    <p class="lead">Gere o hash de um arquivo, verifique se ele foi alterado e documente a cadeia de custódia — tudo num só lugar. Base legal: arts. 158-A a 158-F do CPP.</p>
+
+    <section id="gerador">
+      <h2><span class="bar"></span>Gerador de Hash (roda no seu navegador)</h2>
+      <div class="tool">
+        <div class="privacy">🔒 O arquivo NÃO é enviado a lugar nenhum — o cálculo acontece 100% no seu computador.</div>
+        <div class="drop" id="drop">
+          <strong>Clique ou arraste um arquivo aqui</strong>
+          <div class="hint">Ex.: extração de celular, vídeo de CFTV, imagem forense, documento.</div>
+          <input type="file" id="file" hidden />
+        </div>
+        <div class="algos">
+          <label><input type="checkbox" value="SHA-256" checked> SHA-256</label>
+          <label><input type="checkbox" value="SHA-1"> SHA-1</label>
+          <label><input type="checkbox" value="SHA-384"> SHA-384</label>
+          <label><input type="checkbox" value="SHA-512"> SHA-512</label>
+        </div>
+        <div class="fileinfo" id="fileinfo"></div>
+        <div class="progress" id="progress"><div></div></div>
+        <div class="result" id="result"></div>
+        <div class="verify">
+          <p class="lead" style="margin:6px 0">Conferir contra um hash conhecido (cole abaixo):</p>
+          <input id="expected" placeholder="Cole aqui o hash esperado para comparar…" autocomplete="off" />
+          <div class="msg" id="verifymsg"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="comandos">
+      <h2><span class="bar"></span>Gerar hash pelo Windows (sem instalar nada)</h2>
+      <p class="lead"><strong>PowerShell</strong> (recomendado) — SHA-256:</p>
+      <pre>Get-FileHash "C:\caminho\arquivo.ext" -Algorithm SHA256</pre>
+      <p class="lead"><strong>Prompt (cmd)</strong> com certutil — SHA-256 (ou MD5/SHA1):</p>
+      <pre>certutil -hashfile "C:\caminho\arquivo.ext" SHA256</pre>
+      <p class="lead">Hash de uma pasta inteira (PowerShell) — gera lista:</p>
+      <pre>Get-ChildItem "C:\pasta" -Recurse -File | Get-FileHash -Algorithm SHA256 |
+  Export-Csv "C:\pasta\hashes.csv" -NoTypeInformation -Encoding UTF8</pre>
+    </section>
+
+    <section id="cadeia">
+      <h2><span class="bar"></span>Cadeia de custódia — passo a passo</h2>
+      <ol class="steps">
+        <li><strong>Reconhecimento / coleta:</strong> identifique o vestígio e registre onde, quando e por quem foi coletado.</li>
+        <li><strong>Hash na origem:</strong> gere o hash (SHA-256) <em>logo após</em> a extração/cópia e registre no laudo/termo. É a "impressão digital" do arquivo.</li>
+        <li><strong>Acondicionamento e transporte:</strong> mídia lacrada/identificada; nº do lacre no termo.</li>
+        <li><strong>Armazenamento:</strong> guarde a cópia de trabalho e preserve o original. Trabalhe sempre na cópia.</li>
+        <li><strong>Verificação:</strong> antes de usar/entregar, gere o hash de novo e compare com o da origem — se bater, o arquivo está íntegro.</li>
+        <li><strong>Documentação contínua:</strong> todo acesso/transferência entra no rastro (quem, quando, por quê).</li>
+      </ol>
+      <div class="cards">
+        <div class="cbox"><h3>Por que hash?</h3><p>Se um único bit mudar, o hash muda completamente. Prova que o arquivo é o mesmo da coleta.</p></div>
+        <div class="cbox"><h3>Qual algoritmo?</h3><p>SHA-256 é o padrão atual. MD5/SHA-1 servem para compatibilidade com sistemas antigos, mas não como garantia forte.</p></div>
+        <div class="cbox"><h3>Regra de ouro</h3><p>Nunca trabalhe no original. Copie, confira o hash da cópia e trabalhe nela.</p></div>
+        <div class="cbox"><h3>Base legal</h3><p>Arts. 158-A a 158-F do CPP (cadeia de custódia). Registre cada elo.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="stripe"></div>
+    Sistemas PCPE — cadeia de custódia &amp; hash. Orientação geral; siga as normas técnicas e o procedimento da sua unidade.
+  </footer>
+
+  <script>
+    const drop = document.getElementById("drop");
+    const fileInput = document.getElementById("file");
+    const fileinfo = document.getElementById("fileinfo");
+    const result = document.getElementById("result");
+    const progress = document.getElementById("progress");
+    const progressBar = progress.firstElementChild;
+    const expected = document.getElementById("expected");
+    const verifymsg = document.getElementById("verifymsg");
+    let lastHashes = {};
+
+    drop.addEventListener("click", () => fileInput.click());
+    ["dragover","dragenter"].forEach(e => drop.addEventListener(e, ev => { ev.preventDefault(); drop.classList.add("over"); }));
+    ["dragleave","drop"].forEach(e => drop.addEventListener(e, ev => { ev.preventDefault(); drop.classList.remove("over"); }));
+    drop.addEventListener("drop", ev => { if (ev.dataTransfer.files[0]) handle(ev.dataTransfer.files[0]); });
+    fileInput.addEventListener("change", () => { if (fileInput.files[0]) handle(fileInput.files[0]); });
+
+    function fmtSize(b){ const u=["B","KB","MB","GB"]; let i=0; while(b>=1024&&i<u.length-1){b/=1024;i++;} return b.toFixed(i?1:0)+" "+u[i]; }
+
+    async function handle(file){
+      const algos = [...document.querySelectorAll(".algos input:checked")].map(c => c.value);
+      if (!algos.length){ alert("Selecione pelo menos um algoritmo."); return; }
+      fileinfo.textContent = `Arquivo: ${file.name} · ${fmtSize(file.size)}`;
+      result.classList.remove("show"); result.innerHTML = "";
+      verifymsg.textContent = ""; verifymsg.className = "msg";
+      progress.classList.add("show"); progressBar.style.width = "10%";
+      try {
+        const buf = await file.arrayBuffer();
+        progressBar.style.width = "45%";
+        lastHashes = {};
+        let html = "";
+        for (const algo of algos){
+          const digest = await crypto.subtle.digest(algo, buf);
+          const hex = [...new Uint8Array(digest)].map(b => b.toString(16).padStart(2,"0")).join("");
+          lastHashes[algo] = hex;
+          html += `<div class="hashrow"><div class="algo">${algo}</div><div class="val" id="v_${algo}">${hex}</div><button data-h="${hex}">Copiar</button></div>`;
+        }
+        progressBar.style.width = "100%";
+        result.innerHTML = html; result.classList.add("show");
+        result.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => {
+          navigator.clipboard.writeText(btn.dataset.h); btn.textContent = "Copiado!"; setTimeout(()=>btn.textContent="Copiar",1200);
+        }));
+        checkVerify();
+        setTimeout(()=>progress.classList.remove("show"),400);
+      } catch(err){
+        progress.classList.remove("show");
+        result.innerHTML = `<div class="hashrow" style="color:var(--danger)">Erro ao ler o arquivo: ${err.message}. Arquivos muito grandes podem exceder a memória do navegador — nesse caso use o PowerShell.</div>`;
+        result.classList.add("show");
+      }
+    }
+
+    function checkVerify(){
+      const exp = expected.value.trim().toLowerCase().replace(/\s/g,"");
+      if (!exp || !Object.keys(lastHashes).length){ verifymsg.textContent=""; verifymsg.className="msg"; return; }
+      const match = Object.values(lastHashes).some(h => h === exp);
+      if (match){ verifymsg.textContent = "✔ CONFERE — o arquivo está íntegro (hash idêntico)."; verifymsg.className = "msg match"; }
+      else { verifymsg.textContent = "✖ NÃO CONFERE — o hash informado não bate com nenhum calculado."; verifymsg.className = "msg nomatch"; }
+    }
+    expected.addEventListener("input", checkVerify);
+  </script>
+</body>
+</html>

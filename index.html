@@ -143,6 +143,7 @@
     </div>
     <nav>
       <a href="#uteis" class="hot">★ Mais Úteis</a>
+      <a href="#ferramentas">Ferramentas</a>
       <a href="#consultas">Consultas & OSINT</a>
       <a href="#downloads">Downloads</a>
       <a href="#ler">Provedores (LER)</a>
@@ -178,6 +179,11 @@
         {n:"BNMP", u:"https://portalbnmp.cnj.jus.br/#/captcha/", img:"logoConselhoNacionalDeJustica.png"},
         {n:"Infopol 2", u:"http://200.238.83.36/pernambuco/", img:"logoInfopolVelho.png", badge:"old"},
         {n:"COAF (SEIC)", u:"https://seic.coaf.gov.br/", img:"toolGov.svg"}
+      ]},
+
+      { id:"ferramentas", title:"Ferramentas & Guias", items:[
+        {n:"Multas de Viaturas", u:"multas.html", img:"toolGov.svg", internal:true},
+        {n:"Cadeia de Custódia & Hash", u:"custodia.html", img:"toolForense.svg", internal:true}
       ]},
 
       { id:"consultas", title:"Consultas & Investigação (OSINT)", items:[
@@ -301,7 +307,8 @@
         }
         const a = document.createElement("a");
         a.className = "card" + (it.mail ? " mail" : "");
-        a.href = it.u; a.target = "_blank"; a.rel = "noopener noreferrer";
+        a.href = it.u;
+        if (!it.internal){ a.target = "_blank"; a.rel = "noopener noreferrer"; }
         a.dataset.name = it.n.toLowerCase();
         const badge = it.badge ? `<span class="badge ${it.badge}">${badgeText[it.badge]}</span>` : "";
         a.innerHTML = `${badge}<div class="thumb"><img src="${IC}${it.img}" alt="${it.n}" loading="lazy"></div><span>${it.n}</span>`;
@@ -314,7 +321,7 @@
     // ── Índice A–Z (gerado de todos os itens) ──
     const secOf = {uteis:"Mais Úteis", consultas:"OSINT", downloads:"Download", ler:"LER", links:"Útil", dti:"DTI", geral:"Geral"};
     const all = [];
-    data.forEach(sec => sec.items.forEach(it => { if (it.n && it.u) all.push({n:it.n, u:it.u, tag:secOf[sec.id]||""}); }));
+    data.forEach(sec => sec.items.forEach(it => { if (it.n && it.u && !it.internal) all.push({n:it.n, u:it.u, tag:secOf[sec.id]||""}); }));
     all.sort((a,b) => a.n.localeCompare(b.n, "pt", {sensitivity:"base"}));
     const azSec = document.createElement("section");
     azSec.id = "todos";

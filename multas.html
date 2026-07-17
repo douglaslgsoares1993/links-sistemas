@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#000000" />
+<meta name="description" content="Multas de viaturas — modelos de recurso, prazos, para onde direcionar e base legal (art. 280 §6º CTB)." />
+<title>Multas de Viaturas — Sistemas PCPE</title>
+<link rel="icon" href="icon/bandeiraPernambuco.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root{--black:#000;--black-soft:#0d0d0d;--panel:#141414;--panel-h:#1e1e1e;--gold:#c9a14a;--gold-light:#e0bf6d;--paper:#fff;--txt:#f2f2f2;--muted:#9a9a9a;--line:#2a2a2a;--danger:#b3261e}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',system-ui,Arial,sans-serif;background:var(--black-soft);color:var(--txt);min-height:100vh;padding-bottom:60px;line-height:1.55}
+  .chrome-bar{background:var(--black);display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;min-height:96px}
+  .chrome-brand{display:flex;align-items:center;gap:16px}
+  .chrome-brand img{height:60px;width:auto;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+  .chrome-brand .name{display:flex;flex-direction:column;gap:2px;color:#fff}
+  .chrome-brand .name .l1{font-weight:800;font-size:1.2rem}
+  .chrome-brand .name .l2{font-weight:400;font-size:.68rem;letter-spacing:.4em;color:#cfcfcf}
+  .back{color:var(--gold-light);text-decoration:none;font-weight:600;font-size:.85rem;border:1px solid var(--line);padding:8px 14px;border-radius:999px}
+  .back:hover{background:var(--gold);color:#000;border-color:var(--gold)}
+  .chrome-stripe{height:8px;background:var(--gold)}
+  main{max-width:900px;margin:0 auto;padding:0 18px}
+  h1{font-size:1.7rem;margin:34px 0 6px}
+  h1 .sub{display:block;font-size:.8rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px}
+  .lead{color:var(--muted);margin-bottom:8px}
+  section{margin-top:34px;scroll-margin-top:20px}
+  h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.03em;border-bottom:2px solid var(--gold);padding-bottom:8px;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+  h2 .bar{width:6px;height:20px;background:var(--gold);border-radius:2px}
+  .steps{display:grid;gap:14px}
+  .step{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;padding:16px 18px}
+  .step h3{font-size:1.02rem;margin-bottom:4px}
+  .step .prazo{color:var(--gold-light);font-weight:700;font-size:.85rem}
+  .step p{color:var(--muted);font-size:.92rem;margin-top:6px}
+  .thesis{background:#181510;border:1px solid rgba(201,161,74,.4);border-radius:12px;padding:18px 20px}
+  .thesis blockquote{border-left:3px solid var(--gold);padding:8px 0 8px 16px;margin:12px 0;font-style:italic;color:var(--gold-light)}
+  .thesis .law{font-size:.82rem;color:var(--muted);margin-top:4px}
+  ul.check{list-style:none;display:grid;gap:8px;margin-top:6px}
+  ul.check li{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:.92rem}
+  ul.check li::before{content:"☐ ";color:var(--gold)}
+  .models{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+  .model{display:flex;flex-direction:column;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;text-decoration:none;color:var(--txt);transition:.15s}
+  .model:hover{border-color:var(--gold);background:var(--panel-h);transform:translateY(-3px)}
+  .model .tg{font-size:.68rem;font-weight:800;letter-spacing:.06em;color:var(--gold-light);text-transform:uppercase}
+  .model .nm{font-weight:700}
+  .model .dl{font-size:.78rem;color:var(--muted)}
+  .warn{background:rgba(179,38,30,.12);border:1px solid var(--danger);border-radius:10px;padding:14px 16px;font-size:.9rem;margin-top:14px}
+  table{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:6px}
+  th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+  th{background:var(--panel);color:var(--gold-light)}
+  footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:46px}
+  footer .stripe{height:4px;background:var(--gold);max-width:120px;margin:0 auto 14px;border-radius:2px}
+  @media(max-width:520px){.chrome-brand .name .l2{display:none}}
+</style>
+</head>
+<body>
+  <header>
+    <div class="chrome-bar">
+      <div class="chrome-brand">
+        <img src="icon/brasaoHeader.png" alt="Brasão PCPE" />
+        <div class="name"><span class="l1">SISTEMAS PCPE</span><span class="l2">POLÍCIA CIVIL DE PERNAMBUCO</span></div>
+      </div>
+      <a class="back" href="index.html">← Voltar</a>
+    </div>
+    <div class="chrome-stripe"></div>
+  </header>
+
+  <main>
+    <h1><span class="sub">Guia prático</span>Multas de Viaturas — Recurso</h1>
+    <p class="lead">Modelos de recurso, prazos, para onde direcionar e a base legal para viaturas policiais. Preencha os campos entre colchetes <code>[ ]</code> com os dados reais do seu caso.</p>
+
+    <section id="base">
+      <h2><span class="bar"></span>Base legal (tese principal)</h2>
+      <div class="thesis">
+        <p><strong>Art. 280, §6º, do CTB</strong> (incluído pela Lei nº 14.599/2023):</p>
+        <blockquote>"Não há infração de circulação, parada ou estacionamento relativa aos veículos destinados a socorro de incêndio e salvamento, aos de polícia, aos de fiscalização e operação de trânsito e às ambulâncias, ainda que não identificados ostensivamente."</blockquote>
+        <p>O dispositivo é categórico: <strong>"não há infração"</strong> — afasta a própria tipicidade administrativa da conduta, independentemente de sirene/giroflex (art. 29, VII, é outro plano normativo). Reforço: art. 144, §4º, CF (função de polícia judiciária). Aplicação imediata aos processos em curso.</p>
+        <p class="law">Fundamentos processuais do recurso: arts. 281, 285 e seguintes do CTB · Res. CONTRAN nº 900/2022 e nº 918/2022 · dever de motivação: arts. 2º e 50 da Lei nº 9.784/1999.</p>
+      </div>
+    </section>
+
+    <section id="fluxo">
+      <h2><span class="bar"></span>Fluxo e prazos</h2>
+      <div class="steps">
+        <div class="step">
+          <h3>1. Defesa Prévia <span class="prazo">— após a Notificação de Autuação</span></h3>
+          <p>Primeira manifestação, ainda antes da penalidade. Prazo indicado na própria notificação (em regra, não inferior a 30 dias). Aqui também se indica o condutor (FICI), se o AIT não o identificou.</p>
+        </div>
+        <div class="step">
+          <h3>2. Recurso à JARI <span class="prazo">— após a Notificação de Penalidade (NIP)</span></h3>
+          <p>1ª instância administrativa. JARI <em>vinculada ao órgão que autuou</em>. Prazo final consta na NIP (art. 285 CTB / art. 15 Res. 918/2022). Pedir efeito suspensivo (art. 285, §3º).</p>
+        </div>
+        <div class="step">
+          <h3>3. Recurso ao CETRAN/PE <span class="prazo">— após a decisão da JARI</span></h3>
+          <p>2ª instância (Conselho Estadual de Trânsito). Cabível quando a JARI mantém a penalidade. Prazo na decisão da JARI.</p>
+        </div>
+      </div>
+      <div class="warn"><strong>Atenção ao prazo:</strong> conte sempre pela data da notificação/decisão de cada fase. Perder o prazo pode precluir o direito de recorrer. Na dúvida, protocole no menor prazo indicado.</div>
+    </section>
+
+    <section id="direcionar">
+      <h2><span class="bar"></span>Para onde direcionar</h2>
+      <p class="lead">O destino depende de <strong>quem autuou</strong> (consta no AIT). A JARI é sempre a vinculada ao órgão autuador.</p>
+      <table>
+        <tr><th>Órgão autuador (no AIT)</th><th>Para onde vai o recurso</th></tr>
+        <tr><td>Autarquia/Guarda municipal (ex.: AMC Caruaru, GM Belo Jardim)</td><td>JARI do próprio município/autarquia → depois CETRAN/PE</td></tr>
+        <tr><td>DETRAN-PE (vias estaduais)</td><td>JARI do DETRAN-PE → depois CETRAN/PE</td></tr>
+        <tr><td>DER / rodovias estaduais</td><td>Órgão possui SEI — priorizar protocolo direto via SEI</td></tr>
+        <tr><td>PRF / rodovias federais</td><td>JARI vinculada à PRF (esfera federal)</td></tr>
+      </table>
+      <div class="warn"><strong>Antes de enviar:</strong> confirme o e-mail/protocolo oficial do órgão pelo site ou telefone dele (não mande para endereço "de ouvido"). Guarde cópia do protocolo + comprovante de envio.</div>
+    </section>
+
+    <section id="modelos">
+      <h2><span class="bar"></span>Modelos (.docx)</h2>
+      <p class="lead">Baixe, preencha os campos <code>[ ]</code> e converta em PDF para protocolar.</p>
+      <div class="models">
+        <a class="model" href="multas/modelos/01_Defesa_Previa.docx" download><span class="tg">Fase 1</span><span class="nm">Defesa Prévia</span><span class="dl">após Notificação de Autuação · .docx ⬇</span></a>
+        <a class="model" href="multas/modelos/02_Recurso_JARI.docx" download><span class="tg">Fase 2</span><span class="nm">Recurso à JARI</span><span class="dl">após Notificação de Penalidade · .docx ⬇</span></a>
+        <a class="model" href="multas/modelos/03_Recurso_CETRAN.docx" download><span class="tg">Fase 3</span><span class="nm">Recurso ao CETRAN</span><span class="dl">após decisão da JARI · .docx ⬇</span></a>
+        <a class="model" href="multas/modelos/04_Email_Encaminhamento.docx" download><span class="tg">Envio</span><span class="nm">E-mail de Encaminhamento</span><span class="dl">modelo de ofício/e-mail · .docx ⬇</span></a>
+      </div>
+    </section>
+
+    <section id="anexos">
+      <h2><span class="bar"></span>Rol de anexos (checklist)</h2>
+      <ul class="check">
+        <li>Cópia do AIT / Notificação de Autuação</li>
+        <li>Cópia do CRLV do veículo (viatura)</li>
+        <li>Cópia da CNH e identidade funcional do condutor</li>
+        <li>FICI — Formulário de Identificação do Condutor Infrator (se o AIT não identificou o condutor)</li>
+        <li>Cópia da decisão que indeferiu a fase anterior (quando houver)</li>
+        <li>Comprovante do serviço oficial/institucional (quando disponível)</li>
+      </ul>
+      <div class="warn"><strong>Não invente dados.</strong> Faltou algo no processo? Deixe <code>[CONFIRMAR]</code> e valide com o setor antes de protocolar. Assinatura: como regra, a autoridade da unidade a que a viatura pertence; o condutor assina quando necessário.</div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="stripe"></div>
+    Sistemas PCPE — guia de recurso de multas de viaturas. Orientação geral; não substitui análise do caso concreto.
+  </footer>
+</body>
+</html>
