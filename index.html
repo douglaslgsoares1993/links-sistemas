@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="theme-color" content="#000000" />
-<meta name="description" content="Concentrador de links da PCPE. Sistemas usados na Polícia Civil de Pernambuco." />
+<meta name="description" content="Sistemas da Polícia Civil de Pernambuco — acesso rápido, consultas, investigação (OSINT) e ferramentas." />
 <title>Sistemas PCPE</title>
 <link rel="icon" href="icon/bandeiraPernambuco.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -38,31 +38,35 @@
   .chrome-setor .l2{color:var(--gold-light);font-weight:600;font-size:.72rem;letter-spacing:.06em}
   .chrome-stripe{height:8px;background:var(--gold)}
 
-  /* ── Nav ── */
-  nav{
-    position:sticky;top:0;z-index:50;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;
-    padding:12px;background:rgba(0,0,0,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+  /* ── Barra de busca + nav ── */
+  .toolbar{
+    position:sticky;top:0;z-index:50;background:rgba(0,0,0,.92);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);padding:12px;
   }
+  .search-wrap{max-width:520px;margin:0 auto 10px;position:relative}
+  #search{
+    width:100%;padding:11px 40px 11px 16px;border-radius:999px;border:1px solid var(--line);
+    background:var(--panel);color:var(--txt);font-size:.95rem;font-family:inherit;
+  }
+  #search:focus{outline:none;border-color:var(--gold)}
+  .search-wrap::after{content:"🔎";position:absolute;right:16px;top:50%;transform:translateY(-50%);opacity:.6}
+  nav{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
   nav a{
-    color:var(--txt);text-decoration:none;font-weight:600;font-size:.85rem;
-    padding:8px 18px;border:1px solid var(--line);border-radius:999px;background:var(--panel);transition:.15s;
+    color:var(--txt);text-decoration:none;font-weight:600;font-size:.82rem;
+    padding:7px 15px;border:1px solid var(--line);border-radius:999px;background:var(--panel);transition:.15s;
   }
   nav a:hover{background:var(--gold);border-color:var(--gold);color:#000}
   nav a.hot{border-color:var(--gold);color:var(--gold-light)}
 
-  /* seção destaque (mais úteis) */
-  .sec-title.hot{border-bottom-color:var(--gold-light)}
-  .grid.hot .card{border-color:rgba(201,161,74,.45);background:#181510}
-  .grid.hot .card:hover{border-color:var(--gold)}
-
   main{max-width:1120px;margin:0 auto;padding:0 16px}
-  section{margin-top:38px;scroll-margin-top:74px}
+  section{margin-top:38px;scroll-margin-top:120px}
   .sec-title{
     display:flex;align-items:center;gap:12px;font-size:1.15rem;font-weight:800;
     letter-spacing:.03em;text-transform:uppercase;margin-bottom:18px;padding-bottom:10px;
     border-bottom:2px solid var(--gold);
   }
   .sec-title .bar{width:6px;height:20px;background:var(--gold);border-radius:2px}
+  .sec-title.hot{border-bottom-color:var(--gold-light)}
 
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px}
   .card{
@@ -71,6 +75,16 @@
     border:1px solid var(--line);border-radius:14px;padding:16px 12px;transition:.15s;
   }
   .card:hover{background:var(--panel-h);border-color:var(--gold);transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.55)}
+  .grid.hot .card{border-color:rgba(201,161,74,.45);background:#181510}
+  .grid.hot .card:hover{border-color:var(--gold)}
+  .thumb{
+    width:100%;height:88px;background:var(--paper);border-radius:10px;
+    display:flex;align-items:center;justify-content:center;padding:10px;
+  }
+  .thumb img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+  .card span{font-size:.88rem;font-weight:600;line-height:1.2}
+  .card.mail{border-color:var(--gold)}
+  .card.mail .thumb{box-shadow:inset 0 0 0 2px var(--gold)}
   .badge{
     position:absolute;top:8px;right:8px;font-size:.6rem;font-weight:800;letter-spacing:.06em;
     padding:3px 7px;border-radius:6px;text-transform:uppercase;
@@ -82,14 +96,17 @@
     text-transform:uppercase;color:var(--gold-light);display:flex;align-items:center;gap:10px;
   }
   .subhead::after{content:"";flex:1;height:1px;background:var(--line)}
-  .thumb{
-    width:100%;height:88px;background:var(--paper);border-radius:10px;
-    display:flex;align-items:center;justify-content:center;padding:10px;
+
+  /* ── Índice A–Z ── */
+  .az{columns:4 200px;column-gap:26px}
+  .az a{
+    display:block;break-inside:avoid;color:var(--txt);text-decoration:none;font-size:.85rem;
+    padding:6px 8px;border-radius:6px;border:1px solid transparent;
   }
-  .thumb img{max-width:100%;max-height:100%;object-fit:contain;display:block}
-  .card span{font-size:.88rem;font-weight:600;line-height:1.2}
-  .card.mail{border-color:var(--gold)}
-  .card.mail .thumb{box-shadow:inset 0 0 0 2px var(--gold)}
+  .az a:hover{background:var(--panel);border-color:var(--gold);color:var(--gold-light)}
+  .az a .tag{color:var(--muted);font-size:.7rem;margin-left:6px}
+
+  .noresult{display:none;text-align:center;color:var(--muted);padding:40px 0;font-size:.95rem}
 
   footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:44px}
   footer .stripe{height:4px;background:var(--gold);max-width:120px;margin:0 auto 14px;border-radius:2px}
@@ -98,6 +115,7 @@
     .chrome-brand .name .l1{font-size:1rem}
     .chrome-setor{display:none}
     .grid{grid-template-columns:repeat(auto-fill,minmax(128px,1fr))}
+    .az{columns:2 140px}
   }
 </style>
 </head>
@@ -119,16 +137,24 @@
     <div class="chrome-stripe"></div>
   </header>
 
-  <nav>
-    <a href="#uteis" class="hot">★ Mais Úteis</a>
-    <a href="#consultas">Consultas</a>
-    <a href="#outros">Outros</a>
-    <a href="#dti">DTI</a>
-    <a href="#downloads">Downloads</a>
-    <a href="#geral">Geral</a>
-  </nav>
+  <div class="toolbar">
+    <div class="search-wrap">
+      <input id="search" type="search" placeholder="Buscar sistema, consulta ou ferramenta…" autocomplete="off" />
+    </div>
+    <nav>
+      <a href="#uteis" class="hot">★ Mais Úteis</a>
+      <a href="#consultas">Consultas & OSINT</a>
+      <a href="#downloads">Downloads</a>
+      <a href="#ler">Provedores (LER)</a>
+      <a href="#links">Links Úteis</a>
+      <a href="#dti">DTI</a>
+      <a href="#geral">Geral</a>
+      <a href="#todos">A–Z</a>
+    </nav>
+  </div>
 
   <main id="app"></main>
+  <div class="noresult" id="noresult">Nada encontrado.</div>
 
   <footer>
     <div class="stripe"></div>
@@ -153,57 +179,100 @@
         {n:"Infopol 2", u:"http://200.238.83.36/pernambuco/", img:"logoInfopolVelho.png", badge:"old"},
         {n:"COAF (SEIC)", u:"https://seic.coaf.gov.br/", img:"toolGov.svg"}
       ]},
-      { id:"consultas", title:"Consultas", items:[
-        {sub:"Bases e Sistemas"},
+
+      { id:"consultas", title:"Consultas & Investigação (OSINT)", items:[
+        {sub:"Bases Policiais"},
         {n:"Boletim Integrado", u:"https://certidao.sds.pe.gov.br/#", img:"logoBoletimIntegrado.png"},
         {n:"SPBA", u:"https://spba.pc.pe.gov.br/spba/#/controle", img:"logoPcpeBrasaoOuroFundoBranco.png"},
-        {n:"Receita Federal", u:"https://servicos.receita.fazenda.gov.br/Servicos/CPF/ConsultaSituacao/ConsultaPublica.asp", img:"logoReceitaFederal.png"},
         {n:"SACE", u:"https://www.sds.pe.gov.br/sace/login", img:"logoDefesaSocial.png"},
         {n:"Autovision 1", u:"http://189.39.115.178:8082/", img:"logoAutovision.png"},
         {n:"Autovision 2", u:"http://187.33.66.90:8082/", img:"logoAutovision.png"},
         {n:"Portal Web", u:"https://servicos.sds.pe.gov.br/portalsds/", img:"logoPortalWeb.png"},
         {n:"Drive PE", u:"https://drive.expresso.pe.gov.br/login", img:"logoDrivePe.png"},
-        {sub:"Consulta de IP"},
-        {n:"BGP HE.net", u:"https://bgp.he.net/", img:"toolRede.svg"},
-        {n:"IPinfo", u:"https://ipinfo.io/", img:"toolRede.svg"},
-        {n:"RIPEstat", u:"https://stat.ripe.net/", img:"toolRede.svg"},
-        {sub:"Inteligência"},
-        {n:"SARPAS (DECEA)", u:"https://servicos.decea.mil.br/sarpas/", img:"toolGov.svg"}
+        {sub:"Registros Públicos"},
+        {n:"Receita Federal (CPF)", u:"https://servicos.receita.fazenda.gov.br/Servicos/CPF/ConsultaSituacao/ConsultaPublica.asp", img:"logoReceitaFederal.png"},
+        {n:"CNJ", u:"https://www.cnj.jus.br/", img:"fav_cnj.png"},
+        {n:"TSE", u:"https://www.tse.jus.br/", img:"fav_tse.png"},
+        {n:"JusBrasil", u:"https://www.jusbrasil.com.br/", img:"fav_jusbrasil.png"},
+        {n:"CENPROT (Protestos)", u:"https://site.cenprotnacional.org.br/", img:"fav_cenprot.png"},
+        {n:"CNA / OAB", u:"https://cna.oab.org.br/", img:"fav_oab.png"},
+        {n:"Portal da Transparência", u:"https://www.portaltransparencia.gov.br/", img:"fav_transparencia.png"},
+        {sub:"OSINT (Web)"},
+        {n:"OSINT Framework", u:"https://osintframework.com/", img:"fav_osintframework.png"},
+        {n:"Hunter.io (E-mail)", u:"https://hunter.io/", img:"fav_hunter.png"},
+        {n:"Namechk (Usuários)", u:"https://namechk.com/", img:"toolRede.svg"},
+        {n:"Usersearch", u:"https://usersearch.org/", img:"fav_usersearch.png"},
+        {n:"Yandex (Imagens)", u:"https://yandex.com/", img:"fav_yandex.png"},
+        {n:"Web Archive", u:"https://web.archive.org/", img:"fav_webarchive.png"},
+        {n:"Archive.today", u:"https://archive.ph/", img:"fav_archivetoday.png"},
+        {n:"SunCalc (Sombra/Hora)", u:"https://www.suncalc.org/", img:"fav_suncalc.png"},
+        {sub:"Rastreamento & IP"},
+        {n:"FlightRadar24", u:"https://www.flightradar24.com/", img:"fav_flightradar.png"},
+        {n:"MarineTraffic", u:"https://www.marinetraffic.com/", img:"fav_marinetraffic.png"},
+        {n:"BGP HE.net", u:"https://bgp.he.net/", img:"fav_bgphe.png"},
+        {n:"IPinfo", u:"https://ipinfo.io/", img:"fav_ipinfo.png"},
+        {n:"RIPEstat", u:"https://stat.ripe.net/", img:"fav_ripe.png"},
+        {sub:"Aérea (RPA / Drone)"},
+        {n:"SARPAS (DECEA)", u:"https://servicos.decea.mil.br/sarpas/", img:"fav_decea.png"}
       ]},
-      { id:"outros", title:"Outros", items:[
-        {n:"GreenLight", u:"https://videoconferencia.pe.gov.br/b/", img:"logoGreenlight.png"},
+
+      { id:"downloads", title:"Downloads (Investigador)", items:[
+        {sub:"Ferramentas Forenses"},
+        {n:"Avilla Forensics", u:"https://github.com/AvillaDaniel/AvillaForensics", img:"fav_avilla.png", badge:"forense"},
+        {n:"Autopsy", u:"https://www.autopsy.com/download/", img:"fav_autopsy.png", badge:"forense"},
+        {n:"IPED", u:"https://github.com/sepinf-inc/IPED/releases", img:"fav_iped.png", badge:"forense"},
+        {n:"FTK Imager", u:"https://www.exterro.com/ftk-downloads", img:"fav_ftk.png", badge:"forense"},
+        {n:"HxD (Hex)", u:"https://mh-nexus.de/en/hxd/", img:"fav_hxd.png", badge:"forense"},
+        {n:"Wireshark", u:"https://www.wireshark.org/download.html", img:"fav_wireshark.png", badge:"forense"},
+        {n:"ExifTool", u:"https://exiftool.org/", img:"fav_exiftool.png", badge:"forense"},
+        {n:"ADB Platform Tools", u:"https://developer.android.com/tools/releases/platform-tools", img:"fav_adb.png", badge:"forense"},
+        {n:"WhatsApp Viewer", u:"https://github.com/andreas-mausch/whatsapp-viewer", img:"fav_whatsappviewer.png", badge:"forense"},
+        {sub:"Utilitários"},
+        {n:"7-Zip", u:"https://www.7-zip.org/", img:"toolApp.svg"},
+        {n:"VLC", u:"https://www.videolan.org/vlc/", img:"fav_vlc.png"},
+        {n:"NAPS2 (Scanner)", u:"https://www.naps2.com/download", img:"logoNaps2.png"},
+        {n:"Java", u:"http://200.238.83.219/old-PCPE/JAVA/", img:"logoJava.png", badge:"old"},
+        {n:"AnyDesk", u:"http://200.238.83.219/old-PCPE/AD/", img:"logoAnydesk.png", badge:"old"}
+      ]},
+
+      { id:"ler", title:"Requisição a Provedores (LER)", items:[
+        {n:"Google LERS", u:"https://lers.google.com/", img:"fav_google.png"},
+        {n:"Microsoft", u:"https://leportal.microsoft.com/", img:"fav_microsoft.png"},
+        {n:"Meta / Facebook", u:"https://www.facebook.com/records/", img:"fav_facebook.png"},
+        {n:"X / Twitter", u:"https://legalrequests.twitter.com/", img:"fav_twitter.png"},
+        {n:"Uber", u:"https://lert.uber.com/", img:"fav_uber.png"},
+        {n:"99 / DiDi", u:"https://lert.didiglobal.com/", img:"fav_didi.png"},
+        {n:"iFood (SIRA)", u:"https://sira.ifood.com.br/", img:"fav_ifood.png"},
+        {n:"TIM (InfoGuard)", u:"https://infoguard.timbrasil.com.br/", img:"fav_tim.png"},
+        {n:"Vivo (PortalJud)", u:"https://portaljud.vivo.com.br/", img:"fav_vivo.png"},
+        {n:"Booking", u:"https://authorityportal.booking.com/", img:"fav_booking.png"},
+        {n:"Kodex", u:"https://app.kodex.us/", img:"fav_kodex.png"},
+        {n:"BCB (Protocolo Digital)", u:"https://protocolodigital.bcb.gov.br/", img:"fav_bcb.png"}
+      ]},
+
+      { id:"links", title:"Links Úteis", items:[
+        {n:"GreenLight (Videoconf.)", u:"https://videoconferencia.pe.gov.br/b/", img:"logoGreenlight.png"},
         {n:"Contra-Cheque", u:"https://www.nps.pe.gov.br/PORTALV2/#/", img:"logoContraCheque.png"},
         {n:"Diárias", u:"http://web.transparencia.pe.gov.br/despesas/desp-diarias/", img:"logoDiarias.png"},
-        {n:"SCD", u:"https://diarias.pc.pe.gov.br/#/controle", img:"logoPcpeBrasaoOuroFundoBranco.png"},
-        {n:"SPM", u:"https://www.sadspm.pe.gov.br/web", img:"logoSistemaDePericiasMedicas.png"},
+        {n:"SCD (Diárias PC)", u:"https://diarias.pc.pe.gov.br/#/controle", img:"logoPcpeBrasaoOuroFundoBranco.png"},
+        {n:"SPM (Perícias)", u:"https://www.sadspm.pe.gov.br/web", img:"logoSistemaDePericiasMedicas.png"},
         {n:"I Love PDF", u:"https://www.ilovepdf.com/pt", img:"logoILovePdf.png"},
         {n:"Depósitos Judiciais", u:"https://www.bb.com.br/pbb/pagina-inicial/setor-publico/judiciario/deposito-judicial#/", img:"logoBancoDoBrasil.png"},
         {n:"Gerador de Senha", u:"https://tthiagocarlosdev.github.io/geradordesenha/", img:"logoSiteGeradorDeSenha.png"}
       ]},
+
       { id:"dti", title:"DTI", items:[
         {n:"Plantão DTI", u:"https://wa.me/5581994884114/", img:"whatsApp.png"},
         {n:"DTI Dinter 1", u:"https://wa.me/5581994887049/", img:"whatsApp.png"},
         {n:"DTI Dinter 2", u:"https://wa.me/5587988772185/", img:"whatsApp.png"},
-        {n:"Relatório", u:"https://tthiagocarlosdev.github.io/projects_website/projetos/relatorio_de_servicos_externos/index.html", img:"logoRelatorioDeServicosExternos.png"},
+        {n:"Relatório de Serviços", u:"https://tthiagocarlosdev.github.io/projects_website/projetos/relatorio_de_servicos_externos/index.html", img:"logoRelatorioDeServicosExternos.png"},
         {n:"Teste de Impressora", u:"https://tthiagocarlosdev.github.io/projects_website/projetos/teste_de_impressora/index.html", img:"logoTesteDeImpressora.png"},
         {n:"GLPI", u:"https://glpi.pc.pe.gov.br/", img:"logoGlpi.png"},
         {n:"SPP Treinamento", u:"https://spp-treinamento.pc.pe.gov.br/#/controle", img:"logoPcpeBrasaoOuroFundoCinzaEscuro.png"},
         {n:"SCP", u:"https://scp.pc.pe.gov.br/scp/#/controle", img:"logoPcpeBrasaoMidnightBlueFundoBranco.png"},
         {n:"Endereços e Telefones", u:"https://tthiagocarlosdev.github.io/projects_website/projetos/telefones_enderecos_pcpe/index.html", img:"enderecosETelefonesPcpe.png"}
       ]},
-      { id:"downloads", title:"Downloads", items:[
-        {sub:"Programas"},
-        {n:"Java", u:"http://200.238.83.219/old-PCPE/JAVA/", img:"logoJava.png", badge:"old"},
-        {n:"AnyDesk", u:"http://200.238.83.219/old-PCPE/AD/", img:"logoAnydesk.png", badge:"old"},
-        {n:"NAPS2", u:"https://www.naps2.com/download", img:"logoNaps2.png"},
-        {sub:"Ferramentas Forenses"},
-        {n:"Avilla Forensics", u:"https://github.com/AvillaDaniel/AvillaForensics", img:"toolForense.svg", badge:"forense"},
-        {n:"Autopsy", u:"https://www.autopsy.com/download/", img:"toolForense.svg", badge:"forense"},
-        {n:"IPED", u:"https://github.com/sepinf-inc/IPED/releases", img:"toolForense.svg", badge:"forense"},
-        {n:"FTK Imager", u:"https://www.exterro.com/ftk-downloads", img:"toolForense.svg", badge:"forense"},
-        {n:"HxD (Hex)", u:"https://mh-nexus.de/en/hxd/", img:"toolForense.svg", badge:"forense"},
-        {n:"Wireshark", u:"https://www.wireshark.org/download.html", img:"toolForense.svg", badge:"forense"}
-      ]},
+
       { id:"geral", title:"Geral", items:[
         {n:"Site PCPE", u:"http://www.policiacivil.pe.gov.br/", img:"logoPoliciaCivilDePernambuco.png"},
         {n:"PCPE Virtual", u:"https://pcpevirtual.policiacivil.pe.gov.br/pcp/open.do?action=open&sys=PCP", img:"logoPcpeVirtual.png"},
@@ -214,7 +283,9 @@
       ]}
     ];
 
+    const badgeText = {old:"Antigo", forense:"Forense"};
     const app = document.getElementById("app");
+
     data.forEach(sec => {
       const s = document.createElement("section");
       s.id = sec.id;
@@ -222,24 +293,62 @@
       s.innerHTML = `<div class="sec-title${sec.hot ? " hot" : ""}"><span class="bar"></span>${star}${sec.title}</div>`;
       const g = document.createElement("div");
       g.className = "grid" + (sec.hot ? " hot" : "");
-      const badgeText = {old:"Antigo", forense:"Forense"};
       sec.items.forEach(it => {
         if (it.sub) {
           const h = document.createElement("div");
-          h.className = "subhead";
-          h.textContent = it.sub;
-          g.appendChild(h);
-          return;
+          h.className = "subhead"; h.textContent = it.sub;
+          g.appendChild(h); return;
         }
         const a = document.createElement("a");
         a.className = "card" + (it.mail ? " mail" : "");
         a.href = it.u; a.target = "_blank"; a.rel = "noopener noreferrer";
+        a.dataset.name = it.n.toLowerCase();
         const badge = it.badge ? `<span class="badge ${it.badge}">${badgeText[it.badge]}</span>` : "";
         a.innerHTML = `${badge}<div class="thumb"><img src="${IC}${it.img}" alt="${it.n}" loading="lazy"></div><span>${it.n}</span>`;
         g.appendChild(a);
       });
       s.appendChild(g);
       app.appendChild(s);
+    });
+
+    // ── Índice A–Z (gerado de todos os itens) ──
+    const secOf = {uteis:"Mais Úteis", consultas:"OSINT", downloads:"Download", ler:"LER", links:"Útil", dti:"DTI", geral:"Geral"};
+    const all = [];
+    data.forEach(sec => sec.items.forEach(it => { if (it.n && it.u) all.push({n:it.n, u:it.u, tag:secOf[sec.id]||""}); }));
+    all.sort((a,b) => a.n.localeCompare(b.n, "pt", {sensitivity:"base"}));
+    const azSec = document.createElement("section");
+    azSec.id = "todos";
+    azSec.innerHTML = `<div class="sec-title"><span class="bar"></span>Todos os Sistemas (A–Z)</div>`;
+    const azBox = document.createElement("div");
+    azBox.className = "az";
+    all.forEach(it => {
+      const a = document.createElement("a");
+      a.href = it.u; a.target = "_blank"; a.rel = "noopener noreferrer";
+      a.dataset.name = it.n.toLowerCase();
+      a.innerHTML = `${it.n}<span class="tag">${it.tag}</span>`;
+      azBox.appendChild(a);
+    });
+    azSec.appendChild(azBox);
+    app.appendChild(azSec);
+
+    // ── Busca / filtro ──
+    const search = document.getElementById("search");
+    const noresult = document.getElementById("noresult");
+    search.addEventListener("input", () => {
+      const q = search.value.trim().toLowerCase();
+      let anyVisible = false;
+      document.querySelectorAll("main section").forEach(sec => {
+        let visibleInSec = 0;
+        sec.querySelectorAll("[data-name]").forEach(el => {
+          const match = !q || el.dataset.name.includes(q);
+          el.style.display = match ? "" : "none";
+          if (match) visibleInSec++;
+        });
+        // esconde subheads soltos e seção vazia
+        sec.style.display = visibleInSec ? "" : "none";
+        if (visibleInSec) anyVisible = true;
+      });
+      noresult.style.display = anyVisible ? "none" : "block";
     });
   </script>
 </body>
