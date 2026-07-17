@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="E-mail institucional">
+  <rect x="14" y="26" width="72" height="48" rx="8" fill="#0d0d0d" stroke="#c9a14a" stroke-width="3"/>
+  <path d="M18 32 L50 56 L82 32" fill="none" stroke="#e0bf6d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M18 68 L40 50 M82 68 L60 50" fill="none" stroke="#c9a14a" stroke-width="3" stroke-linecap="round"/>
+</svg>
