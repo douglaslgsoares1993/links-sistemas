@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Órgão / consulta institucional">
+  <polygon points="50,14 84,32 16,32" fill="#0d0d0d" stroke="#c9a14a" stroke-width="3"/>
+  <rect x="16" y="32" width="68" height="6" fill="#c9a14a"/>
+  <rect x="24" y="40" width="8" height="34" fill="#0d0d0d" stroke="#c9a14a" stroke-width="2.5"/>
+  <rect x="46" y="40" width="8" height="34" fill="#0d0d0d" stroke="#c9a14a" stroke-width="2.5"/>
+  <rect x="68" y="40" width="8" height="34" fill="#0d0d0d" stroke="#c9a14a" stroke-width="2.5"/>
+  <rect x="14" y="78" width="72" height="8" fill="#0d0d0d" stroke="#c9a14a" stroke-width="2.5"/>
+  <circle cx="50" cy="24" r="3" fill="#e0bf6d"/>
+</svg>

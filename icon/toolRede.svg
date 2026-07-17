@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Consulta de rede / IP">
+  <circle cx="50" cy="50" r="30" fill="none" stroke="#0d0d0d" stroke-width="4"/>
+  <ellipse cx="50" cy="50" rx="14" ry="30" fill="none" stroke="#c9a14a" stroke-width="3"/>
+  <line x1="20" y1="50" x2="80" y2="50" stroke="#c9a14a" stroke-width="3"/>
+  <line x1="24" y1="35" x2="76" y2="35" stroke="#e0bf6d" stroke-width="2"/>
+  <line x1="24" y1="65" x2="76" y2="65" stroke="#e0bf6d" stroke-width="2"/>
+  <circle cx="50" cy="50" r="5" fill="#c9a14a"/>
+</svg>
