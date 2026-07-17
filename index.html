@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#0b1a3a" />
+<meta name="description" content="Concentrador de links da PCPE. Sistemas usados na Polícia Civil de Pernambuco." />
+<title>Links PCPE</title>
+<link rel="icon" href="icon/bandeiraPernambuco.png" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+<style>
+  :root{
+    --bg:#070d1f; --bg2:#0b1a3a; --card:#101c3a; --card-h:#16264f;
+    --line:#22366b; --txt:#eaf0ff; --muted:#9fb0d8; --accent:#3a7bff; --accent2:#f4c430;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Segoe UI",system-ui,Arial,sans-serif;
+    background:radial-gradient(1200px 600px at 50% -10%,var(--bg2),var(--bg));
+    color:var(--txt);min-height:100vh;padding-bottom:60px;
+  }
+  header{
+    text-align:center;padding:34px 16px 10px;
+  }
+  header img{width:64px;height:auto;border-radius:6px;box-shadow:0 4px 18px rgba(0,0,0,.5)}
+  header h1{font-size:1.9rem;letter-spacing:.5px;margin-top:12px}
+  header h1 span{color:var(--accent2)}
+  header p{color:var(--muted);margin-top:6px;font-size:.95rem}
+
+  nav{
+    position:sticky;top:0;z-index:50;
+    display:flex;flex-wrap:wrap;justify-content:center;gap:10px;
+    padding:14px 12px;margin:14px auto 0;max-width:1100px;
+    background:rgba(7,13,31,.85);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav a{
+    color:var(--txt);text-decoration:none;font-weight:600;font-size:.9rem;
+    padding:8px 16px;border:1px solid var(--line);border-radius:999px;
+    background:var(--card);transition:.15s;
+  }
+  nav a:hover{background:var(--accent);border-color:var(--accent);transform:translateY(-1px)}
+
+  main{max-width:1100px;margin:0 auto;padding:0 16px}
+  section{margin-top:40px;scroll-margin-top:80px}
+  .sec-title{
+    display:flex;align-items:center;gap:10px;
+    font-size:1.25rem;font-weight:700;margin-bottom:18px;
+    padding-bottom:10px;border-bottom:2px solid var(--line);
+  }
+  .sec-title i{color:var(--accent2)}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+  .card{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+    text-align:center;text-decoration:none;color:var(--txt);
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:22px 12px;min-height:120px;transition:.15s;
+  }
+  .card:hover{background:var(--card-h);border-color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 22px rgba(0,0,0,.45)}
+  .card i{font-size:2rem;color:var(--accent)}
+  .card span{font-size:.9rem;font-weight:600;line-height:1.2}
+  .card.mail i{color:var(--accent2)}
+
+  footer{text-align:center;color:var(--muted);font-size:.8rem;margin-top:50px}
+</style>
+</head>
+<body>
+  <header>
+    <img src="icon/bandeiraPernambuco.png" alt="Bandeira de Pernambuco" />
+    <h1>Links <span>PCPE</span></h1>
+    <p>Concentrador de sistemas — Polícia Civil de Pernambuco</p>
+  </header>
+
+  <nav>
+    <a href="#geral">Geral</a>
+    <a href="#consultas">Consultas</a>
+    <a href="#outros">Outros</a>
+    <a href="#dti">DTI</a>
+    <a href="#downloads">Downloads</a>
+  </nav>
+
+  <main id="app"></main>
+
+  <footer>Links PCPE — acesso rápido aos sistemas.</footer>
+
+  <script>
+    const data = [
+      { id:"geral", title:"Geral", icon:"fa-house", items:[
+        {n:"Site PCPE", u:"http://www.policiacivil.pe.gov.br/", i:"fa-shield-halved"},
+        {n:"SPP", u:"https://spp.pc.pe.gov.br/#/controle", i:"fa-folder-open"},
+        {n:"PCPE Virtual", u:"https://pcpevirtual.policiacivil.pe.gov.br/pcp/open.do?action=open&sys=PCP", i:"fa-desktop"},
+        {n:"SEI", u:"https://sei.pe.gov.br/sip/login.php?sigla_orgao_sistema=GOVPE&sigla_sistema=SEI", i:"fa-file-lines"},
+        {n:"PJE", u:"https://pje.tjpe.jus.br/1g/login.seam", i:"fa-scale-balanced"},
+        {n:"Expresso", u:"https://www.expresso.pe.gov.br/login.php?cd=1", i:"fa-envelope"},
+        {n:"SOGo (E-mail)", u:"https://sogo.policiacivil.pe.gov.br/SOGo/", i:"fa-envelope-open-text", mail:true},
+        {n:"SCPD", u:"https://plantaodigital.pc.pe.gov.br/#/controle", i:"fa-clipboard-list"},
+        {n:"SGTI", u:"https://sgti.pc.pe.gov.br/", i:"fa-gears"},
+        {n:"Login", u:"https://www2.pc.pe.gov.br/login/", i:"fa-right-to-bracket"}
+      ]},
+      { id:"consultas", title:"Consultas", icon:"fa-magnifying-glass", items:[
+        {n:"Infoseg", u:"https://seguranca.sinesp.gov.br/sinesp-seguranca/login.jsf", i:"fa-magnifying-glass"},
+        {n:"Infopol", u:"http://200.238.83.149/pernambuco/", i:"fa-database"},
+        {n:"Polícia Ágil", u:"https://policiaagil.sds.pe.gov.br", i:"fa-bolt"},
+        {n:"Boletim Integrado", u:"https://certidao.sds.pe.gov.br/#", i:"fa-file-shield"},
+        {n:"SIAP", u:"https://www.siap.pe.gov.br/SIAP/public/pages/login.jsf", i:"fa-user-shield"},
+        {n:"SPBA", u:"https://spba.pc.pe.gov.br/spba/#/controle", i:"fa-fingerprint"},
+        {n:"BNMP", u:"https://portalbnmp.cnj.jus.br/#/captcha/", i:"fa-gavel"},
+        {n:"Receita Federal", u:"https://servicos.receita.fazenda.gov.br/Servicos/CPF/ConsultaSituacao/ConsultaPublica.asp", i:"fa-id-card"},
+        {n:"SACE", u:"https://www.sds.pe.gov.br/sace/login", i:"fa-clipboard-check"},
+        {n:"Autovision 1", u:"http://189.39.115.178:8082/", i:"fa-car"},
+        {n:"Autovision 2", u:"http://187.33.66.90:8082/", i:"fa-car-on"},
+        {n:"Portal Web", u:"https://servicos.sds.pe.gov.br/portalsds/", i:"fa-globe"},
+        {n:"Infopol 2", u:"http://200.238.83.36/pernambuco/", i:"fa-database"},
+        {n:"Drive PE", u:"https://drive.expresso.pe.gov.br/login", i:"fa-hard-drive"}
+      ]},
+      { id:"outros", title:"Outros", icon:"fa-layer-group", items:[
+        {n:"GreenLight", u:"https://videoconferencia.pe.gov.br/b/", i:"fa-video"},
+        {n:"Contra-Cheque", u:"https://www.nps.pe.gov.br/PORTALV2/#/", i:"fa-money-check-dollar"},
+        {n:"Diárias", u:"http://web.transparencia.pe.gov.br/despesas/desp-diarias/", i:"fa-coins"},
+        {n:"SCD", u:"https://diarias.pc.pe.gov.br/#/controle", i:"fa-plane"},
+        {n:"SPM", u:"https://www.sadspm.pe.gov.br/web", i:"fa-warehouse"},
+        {n:"I Love PDF", u:"https://www.ilovepdf.com/pt", i:"fa-file-pdf"},
+        {n:"Depósitos Judiciais", u:"https://www.bb.com.br/pbb/pagina-inicial/setor-publico/judiciario/deposito-judicial#/", i:"fa-building-columns"},
+        {n:"Gerador de Senha", u:"https://tthiagocarlosdev.github.io/geradordesenha/", i:"fa-key"}
+      ]},
+      { id:"dti", title:"DTI", icon:"fa-headset", items:[
+        {n:"Plantão DTI", u:"https://wa.me/5581994884114/", i:"fa-whatsapp"},
+        {n:"DTI Dinter 1", u:"https://wa.me/5581994887049/", i:"fa-whatsapp"},
+        {n:"DTI Dinter 2", u:"https://wa.me/5587988772185/", i:"fa-whatsapp"},
+        {n:"Relatório", u:"https://tthiagocarlosdev.github.io/projects_website/projetos/relatorio_de_servicos_externos/index.html", i:"fa-file-signature"},
+        {n:"Teste de Impressora", u:"https://tthiagocarlosdev.github.io/projects_website/projetos/teste_de_impressora/index.html", i:"fa-print"},
+        {n:"GLPI", u:"https://glpi.pc.pe.gov.br/", i:"fa-ticket"},
+        {n:"SPP Treinamento", u:"https://spp-treinamento.pc.pe.gov.br/#/controle", i:"fa-graduation-cap"},
+        {n:"SCP", u:"https://scp.pc.pe.gov.br/scp/#/controle", i:"fa-folder-tree"},
+        {n:"Endereços e Telefones", u:"https://tthiagocarlosdev.github.io/projects_website/projetos/telefones_enderecos_pcpe/index.html", i:"fa-address-book"}
+      ]},
+      { id:"downloads", title:"Downloads", icon:"fa-download", items:[
+        {n:"Java", u:"http://200.238.83.219/old-PCPE/JAVA/", i:"fa-mug-hot"},
+        {n:"AnyDesk", u:"http://200.238.83.219/old-PCPE/AD/", i:"fa-display"},
+        {n:"NAPS2", u:"https://www.naps2.com/download", i:"fa-file-image"}
+      ]}
+    ];
+
+    const brands = new Set(["fa-whatsapp"]);
+    const app = document.getElementById("app");
+    data.forEach(sec => {
+      const s = document.createElement("section");
+      s.id = sec.id;
+      s.innerHTML = `<div class="sec-title"><i class="fa-solid ${sec.icon}"></i>${sec.title}</div>`;
+      const g = document.createElement("div");
+      g.className = "grid";
+      sec.items.forEach(it => {
+        const style = brands.has(it.i) ? "fa-brands" : "fa-solid";
+        const a = document.createElement("a");
+        a.className = "card" + (it.mail ? " mail" : "");
+        a.href = it.u; a.target = "_blank"; a.rel = "noopener noreferrer";
+        a.innerHTML = `<i class="${style} ${it.i}"></i><span>${it.n}</span>`;
+        g.appendChild(a);
+      });
+      s.appendChild(g);
+      app.appendChild(s);
+    });
+  </script>
+</body>
+</html>
