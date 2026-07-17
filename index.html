@@ -48,6 +48,12 @@
     padding:8px 18px;border:1px solid var(--line);border-radius:999px;background:var(--panel);transition:.15s;
   }
   nav a:hover{background:var(--gold);border-color:var(--gold);color:#000}
+  nav a.hot{border-color:var(--gold);color:var(--gold-light)}
+
+  /* seção destaque (mais úteis) */
+  .sec-title.hot{border-bottom-color:var(--gold-light)}
+  .grid.hot .card{border-color:rgba(201,161,74,.45);background:#181510}
+  .grid.hot .card:hover{border-color:var(--gold)}
 
   main{max-width:1120px;margin:0 auto;padding:0 16px}
   section{margin-top:38px;scroll-margin-top:74px}
@@ -114,11 +120,12 @@
   </header>
 
   <nav>
-    <a href="#geral">Geral</a>
+    <a href="#uteis" class="hot">★ Mais Úteis</a>
     <a href="#consultas">Consultas</a>
     <a href="#outros">Outros</a>
     <a href="#dti">DTI</a>
     <a href="#downloads">Downloads</a>
+    <a href="#geral">Geral</a>
   </nav>
 
   <main id="app"></main>
@@ -131,42 +138,36 @@
   <script>
     const IC = "icon/";
     const data = [
-      { id:"geral", title:"Geral", items:[
-        {n:"Site PCPE", u:"http://www.policiacivil.pe.gov.br/", img:"logoPoliciaCivilDePernambuco.png"},
+      { id:"uteis", title:"Sistemas Mais Úteis", hot:true, items:[
         {n:"SPP", u:"https://spp.pc.pe.gov.br/#/controle", img:"logoPcpeBrasaoOuroFundoCinzaEscuro.png"},
-        {n:"PCPE Virtual", u:"https://pcpevirtual.policiacivil.pe.gov.br/pcp/open.do?action=open&sys=PCP", img:"logoPcpeVirtual.png"},
         {n:"SEI", u:"https://sei.pe.gov.br/sip/login.php?sigla_orgao_sistema=GOVPE&sigla_sistema=SEI", img:"logoSeiAzul.png"},
         {n:"PJE", u:"https://pje.tjpe.jus.br/1g/login.seam", img:"logoPje.png"},
-        {n:"PJE 2", u:"http://167.114.111.43:2020/PJE/open.do?sys=PJE", img:"logoPje.png"},
-        {n:"Expresso", u:"https://www.expresso.pe.gov.br/login.php?cd=1", img:"logoExpressoPe.png"},
         {n:"SOGo (E-mail)", u:"https://sogo.policiacivil.pe.gov.br/SOGo/", img:"logoPcpeBrasaoOuroFundoCinzaEscuro.png", mail:true},
-        {n:"SCPD", u:"https://plantaodigital.pc.pe.gov.br/#/controle", img:"logoPcpeBrasaoOuroFundoBranco.png"},
         {n:"SGTI", u:"https://sgti.pc.pe.gov.br/", img:"logoPcpeBrasaoOuroFundoCinzaEscuro.png"},
         {n:"SPI", u:"https://spi1.pc.pe.gov.br/", img:"logoPcpeBrasaoOuroFundoBranco.png"},
-        {n:"Login", u:"https://www2.pc.pe.gov.br/login/", img:"logoPcpeBrasaoOuroFundoBranco.png"}
-      ]},
-      { id:"consultas", title:"Consultas", items:[
-        {sub:"Bases e Sistemas"},
         {n:"Infoseg", u:"https://seguranca.sinesp.gov.br/sinesp-seguranca/login.jsf", img:"logoInfoseg.png"},
         {n:"Infopol", u:"http://200.238.83.149/pernambuco/", img:"logoInfopolNovo.png"},
         {n:"Polícia Ágil", u:"https://policiaagil.sds.pe.gov.br", img:"logoPoliciaAgil.png"},
-        {n:"Boletim Integrado", u:"https://certidao.sds.pe.gov.br/#", img:"logoBoletimIntegrado.png"},
         {n:"SIAP", u:"https://www.siap.pe.gov.br/SIAP/public/pages/login.jsf", img:"logoSeresSiap.png"},
-        {n:"SPBA", u:"https://spba.pc.pe.gov.br/spba/#/controle", img:"logoPcpeBrasaoOuroFundoBranco.png"},
         {n:"BNMP", u:"https://portalbnmp.cnj.jus.br/#/captcha/", img:"logoConselhoNacionalDeJustica.png"},
+        {n:"Infopol 2", u:"http://200.238.83.36/pernambuco/", img:"logoInfopolVelho.png", badge:"old"},
+        {n:"COAF (SEIC)", u:"https://seic.coaf.gov.br/", img:"toolGov.svg"}
+      ]},
+      { id:"consultas", title:"Consultas", items:[
+        {sub:"Bases e Sistemas"},
+        {n:"Boletim Integrado", u:"https://certidao.sds.pe.gov.br/#", img:"logoBoletimIntegrado.png"},
+        {n:"SPBA", u:"https://spba.pc.pe.gov.br/spba/#/controle", img:"logoPcpeBrasaoOuroFundoBranco.png"},
         {n:"Receita Federal", u:"https://servicos.receita.fazenda.gov.br/Servicos/CPF/ConsultaSituacao/ConsultaPublica.asp", img:"logoReceitaFederal.png"},
         {n:"SACE", u:"https://www.sds.pe.gov.br/sace/login", img:"logoDefesaSocial.png"},
         {n:"Autovision 1", u:"http://189.39.115.178:8082/", img:"logoAutovision.png"},
         {n:"Autovision 2", u:"http://187.33.66.90:8082/", img:"logoAutovision.png"},
         {n:"Portal Web", u:"https://servicos.sds.pe.gov.br/portalsds/", img:"logoPortalWeb.png"},
-        {n:"Infopol 2", u:"http://200.238.83.36/pernambuco/", img:"logoInfopolVelho.png", badge:"old"},
         {n:"Drive PE", u:"https://drive.expresso.pe.gov.br/login", img:"logoDrivePe.png"},
         {sub:"Consulta de IP"},
         {n:"BGP HE.net", u:"https://bgp.he.net/", img:"toolRede.svg"},
         {n:"IPinfo", u:"https://ipinfo.io/", img:"toolRede.svg"},
         {n:"RIPEstat", u:"https://stat.ripe.net/", img:"toolRede.svg"},
         {sub:"Inteligência"},
-        {n:"COAF (SEIC)", u:"https://seic.coaf.gov.br/", img:"toolGov.svg"},
         {n:"SARPAS (DECEA)", u:"https://servicos.decea.mil.br/sarpas/", img:"toolGov.svg"}
       ]},
       { id:"outros", title:"Outros", items:[
@@ -202,6 +203,14 @@
         {n:"FTK Imager", u:"https://www.exterro.com/ftk-downloads", img:"toolForense.svg", badge:"forense"},
         {n:"HxD (Hex)", u:"https://mh-nexus.de/en/hxd/", img:"toolForense.svg", badge:"forense"},
         {n:"Wireshark", u:"https://www.wireshark.org/download.html", img:"toolForense.svg", badge:"forense"}
+      ]},
+      { id:"geral", title:"Geral", items:[
+        {n:"Site PCPE", u:"http://www.policiacivil.pe.gov.br/", img:"logoPoliciaCivilDePernambuco.png"},
+        {n:"PCPE Virtual", u:"https://pcpevirtual.policiacivil.pe.gov.br/pcp/open.do?action=open&sys=PCP", img:"logoPcpeVirtual.png"},
+        {n:"PJE 2", u:"http://167.114.111.43:2020/PJE/open.do?sys=PJE", img:"logoPje.png"},
+        {n:"Expresso", u:"https://www.expresso.pe.gov.br/login.php?cd=1", img:"logoExpressoPe.png"},
+        {n:"SCPD", u:"https://plantaodigital.pc.pe.gov.br/#/controle", img:"logoPcpeBrasaoOuroFundoBranco.png"},
+        {n:"Login", u:"https://www2.pc.pe.gov.br/login/", img:"logoPcpeBrasaoOuroFundoBranco.png"}
       ]}
     ];
 
@@ -209,9 +218,10 @@
     data.forEach(sec => {
       const s = document.createElement("section");
       s.id = sec.id;
-      s.innerHTML = `<div class="sec-title"><span class="bar"></span>${sec.title}</div>`;
+      const star = sec.hot ? "★ " : "";
+      s.innerHTML = `<div class="sec-title${sec.hot ? " hot" : ""}"><span class="bar"></span>${star}${sec.title}</div>`;
       const g = document.createElement("div");
-      g.className = "grid";
+      g.className = "grid" + (sec.hot ? " hot" : "");
       const badgeText = {old:"Antigo", forense:"Forense"};
       sec.items.forEach(it => {
         if (it.sub) {
