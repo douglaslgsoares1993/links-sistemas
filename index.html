@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="theme-color" content="#000000" />
 <meta name="description" content="Concentrador de links da PCPE. Sistemas usados na Polícia Civil de Pernambuco." />
-<title>Links PCPE</title>
+<title>Sistemas PCPE</title>
 <link rel="icon" href="icon/bandeiraPernambuco.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -60,11 +60,22 @@
 
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px}
   .card{
-    display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;
+    position:relative;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;
     text-decoration:none;color:var(--txt);background:var(--panel);
     border:1px solid var(--line);border-radius:14px;padding:16px 12px;transition:.15s;
   }
   .card:hover{background:var(--panel-h);border-color:var(--gold);transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.55)}
+  .badge{
+    position:absolute;top:8px;right:8px;font-size:.6rem;font-weight:800;letter-spacing:.06em;
+    padding:3px 7px;border-radius:6px;text-transform:uppercase;
+  }
+  .badge.old{background:#3a3a3a;color:#cfcfcf}
+  .badge.forense{background:var(--gold);color:#000}
+  .subhead{
+    grid-column:1/-1;margin:8px 0 -2px;font-size:.72rem;font-weight:700;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--gold-light);display:flex;align-items:center;gap:10px;
+  }
+  .subhead::after{content:"";flex:1;height:1px;background:var(--line)}
   .thumb{
     width:100%;height:88px;background:var(--paper);border-radius:10px;
     display:flex;align-items:center;justify-content:center;padding:10px;
@@ -90,13 +101,13 @@
       <div class="chrome-brand">
         <img src="icon/brasaoHeader.png" alt="Brasão PCPE" />
         <div class="name">
-          <span class="l1">LINKS PCPE</span>
+          <span class="l1">SISTEMAS PCPE</span>
           <span class="l2">POLÍCIA CIVIL DE PERNAMBUCO</span>
         </div>
       </div>
       <div class="chrome-setor">
-        <span class="l1">CONCENTRADOR</span>
-        <span class="l2">DE SISTEMAS</span>
+        <span class="l1">ACESSO RÁPIDO</span>
+        <span class="l2">AOS SISTEMAS</span>
       </div>
     </div>
     <div class="chrome-stripe"></div>
@@ -114,7 +125,7 @@
 
   <footer>
     <div class="stripe"></div>
-    Links PCPE — acesso rápido aos sistemas da Polícia Civil de Pernambuco.
+    Sistemas PCPE — acesso rápido aos sistemas da Polícia Civil de Pernambuco.
   </footer>
 
   <script>
@@ -145,7 +156,7 @@
         {n:"Autovision 1", u:"http://189.39.115.178:8082/", img:"logoAutovision.png"},
         {n:"Autovision 2", u:"http://187.33.66.90:8082/", img:"logoAutovision.png"},
         {n:"Portal Web", u:"https://servicos.sds.pe.gov.br/portalsds/", img:"logoPortalWeb.png"},
-        {n:"Infopol 2", u:"http://200.238.83.36/pernambuco/", img:"logoInfopolVelho.png"},
+        {n:"Infopol 2", u:"http://200.238.83.36/pernambuco/", img:"logoInfopolVelho.png", badge:"old"},
         {n:"Drive PE", u:"https://drive.expresso.pe.gov.br/login", img:"logoDrivePe.png"}
       ]},
       { id:"outros", title:"Outros", items:[
@@ -170,9 +181,17 @@
         {n:"Endereços e Telefones", u:"https://tthiagocarlosdev.github.io/projects_website/projetos/telefones_enderecos_pcpe/index.html", img:"enderecosETelefonesPcpe.png"}
       ]},
       { id:"downloads", title:"Downloads", items:[
-        {n:"Java", u:"http://200.238.83.219/old-PCPE/JAVA/", img:"logoJava.png"},
-        {n:"AnyDesk", u:"http://200.238.83.219/old-PCPE/AD/", img:"logoAnydesk.png"},
-        {n:"NAPS2", u:"https://www.naps2.com/download", img:"logoNaps2.png"}
+        {sub:"Programas"},
+        {n:"Java", u:"http://200.238.83.219/old-PCPE/JAVA/", img:"logoJava.png", badge:"old"},
+        {n:"AnyDesk", u:"http://200.238.83.219/old-PCPE/AD/", img:"logoAnydesk.png", badge:"old"},
+        {n:"NAPS2", u:"https://www.naps2.com/download", img:"logoNaps2.png"},
+        {sub:"Ferramentas Forenses"},
+        {n:"Avilla Forensics", u:"https://github.com/AvillaDaniel/AvillaForensics", img:"toolForense.svg", badge:"forense"},
+        {n:"Autopsy", u:"https://www.autopsy.com/download/", img:"toolForense.svg", badge:"forense"},
+        {n:"IPED", u:"https://github.com/sepinf-inc/IPED/releases", img:"toolForense.svg", badge:"forense"},
+        {n:"FTK Imager", u:"https://www.exterro.com/ftk-downloads", img:"toolForense.svg", badge:"forense"},
+        {n:"HxD (Hex)", u:"https://mh-nexus.de/en/hxd/", img:"toolForense.svg", badge:"forense"},
+        {n:"Wireshark", u:"https://www.wireshark.org/download.html", img:"toolForense.svg", badge:"forense"}
       ]}
     ];
 
@@ -183,11 +202,20 @@
       s.innerHTML = `<div class="sec-title"><span class="bar"></span>${sec.title}</div>`;
       const g = document.createElement("div");
       g.className = "grid";
+      const badgeText = {old:"Antigo", forense:"Forense"};
       sec.items.forEach(it => {
+        if (it.sub) {
+          const h = document.createElement("div");
+          h.className = "subhead";
+          h.textContent = it.sub;
+          g.appendChild(h);
+          return;
+        }
         const a = document.createElement("a");
         a.className = "card" + (it.mail ? " mail" : "");
         a.href = it.u; a.target = "_blank"; a.rel = "noopener noreferrer";
-        a.innerHTML = `<div class="thumb"><img src="${IC}${it.img}" alt="${it.n}" loading="lazy"></div><span>${it.n}</span>`;
+        const badge = it.badge ? `<span class="badge ${it.badge}">${badgeText[it.badge]}</span>` : "";
+        a.innerHTML = `${badge}<div class="thumb"><img src="${IC}${it.img}" alt="${it.n}" loading="lazy"></div><span>${it.n}</span>`;
         g.appendChild(a);
       });
       s.appendChild(g);

@@ -1,9 +1,10 @@
-# Links PCPE
+# Sistemas PCPE
 
-Concentrador de links dos sistemas usados na Polícia Civil de Pernambuco.
+Página de acesso rápido aos sistemas usados na Polícia Civil de Pernambuco.
 
-Página pública para acesso rápido: Geral, Consultas, Outros, DTI e Downloads.
-Inclui o acesso ao e-mail institucional (SOGo) pelo endereço principal.
+Seções: Geral, Consultas, Outros, DTI e Downloads (com Programas e
+Ferramentas Forenses). Inclui o e-mail institucional (SOGo) pelo endereço
+principal. Identidade visual PCPE (preto/dourado, Inter).
 
 ## Publicação
 
