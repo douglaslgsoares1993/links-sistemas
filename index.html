@@ -91,6 +91,7 @@
   }
   .badge.old{background:#3a3a3a;color:#cfcfcf}
   .badge.forense{background:var(--gold);color:#000}
+  .badge.rede{background:#1f3a5f;color:#cfe3ff;border:1px solid #3f6a9e}
   .subhead{
     grid-column:1/-1;margin:8px 0 -2px;font-size:.72rem;font-weight:700;letter-spacing:.14em;
     text-transform:uppercase;color:var(--gold-light);display:flex;align-items:center;gap:10px;
@@ -178,7 +179,9 @@
         {n:"SIAP", u:"https://www.siap.pe.gov.br/SIAP/public/pages/login.jsf", img:"logoSeresSiap.png"},
         {n:"BNMP", u:"https://portalbnmp.cnj.jus.br/#/captcha/", img:"logoConselhoNacionalDeJustica.png"},
         {n:"Infopol 2", u:"http://200.238.83.36/pernambuco/", img:"logoInfopolVelho.png", badge:"old"},
-        {n:"COAF (SEIC)", u:"https://seic.coaf.gov.br/", img:"toolGov.svg"}
+        {n:"COAF (SEIC)", u:"https://seic.coaf.gov.br/", img:"toolGov.svg"},
+        {n:"SIGEPE (Expediente)", u:"https://www.sigepe.pe.gov.br/sgnet/", img:"toolGov.svg", badge:"rede",
+         k:"material de expediente almoxarifado suprimento pedido compra sgnet"}
       ]},
 
       { id:"ferramentas", title:"Ferramentas & Guias", items:[
@@ -190,7 +193,7 @@
         {sub:"Bases Policiais"},
         {n:"Boletim Integrado", u:"https://certidao.sds.pe.gov.br/#", img:"logoBoletimIntegrado.png"},
         {n:"SPBA", u:"https://spba.pc.pe.gov.br/spba/#/controle", img:"logoPcpeBrasaoOuroFundoBranco.png"},
-        {n:"SACE", u:"https://www.sds.pe.gov.br/sace/login", img:"logoDefesaSocial.png"},
+        {n:"SACE", u:"https://sace.sds.pe.gov.br/", img:"logoDefesaSocial.png"},
         {n:"Autovision 1", u:"http://189.39.115.178:8082/", img:"logoAutovision.png"},
         {n:"Autovision 2", u:"http://187.33.66.90:8082/", img:"logoAutovision.png"},
         {n:"Portal Web", u:"https://servicos.sds.pe.gov.br/portalsds/", img:"logoPortalWeb.png"},
@@ -259,7 +262,7 @@
       { id:"links", title:"Links Úteis", items:[
         {n:"GreenLight (Videoconf.)", u:"https://videoconferencia.pe.gov.br/b/", img:"logoGreenlight.png"},
         {n:"Contra-Cheque", u:"https://www.nps.pe.gov.br/PORTALV2/#/", img:"logoContraCheque.png"},
-        {n:"Diárias", u:"http://web.transparencia.pe.gov.br/despesas/desp-diarias/", img:"logoDiarias.png"},
+        {n:"Diárias (Transparência)", u:"https://transparencia.pe.gov.br/despesas/", img:"logoDiarias.png", k:"despesas transparencia"},
         {n:"SCD (Diárias PC)", u:"https://diarias.pc.pe.gov.br/#/controle", img:"logoPcpeBrasaoOuroFundoBranco.png"},
         {n:"SPM (Perícias)", u:"https://www.sadspm.pe.gov.br/web", img:"logoSistemaDePericiasMedicas.png"},
         {n:"I Love PDF", u:"https://www.ilovepdf.com/pt", img:"logoILovePdf.png"},
@@ -289,7 +292,7 @@
       ]}
     ];
 
-    const badgeText = {old:"Antigo", forense:"Forense"};
+    const badgeText = {old:"Antigo", forense:"Forense", rede:"Rede PCPE"};
     const app = document.getElementById("app");
 
     data.forEach(sec => {
@@ -309,7 +312,7 @@
         a.className = "card" + (it.mail ? " mail" : "");
         a.href = it.u;
         if (!it.internal){ a.target = "_blank"; a.rel = "noopener noreferrer"; }
-        a.dataset.name = it.n.toLowerCase();
+        a.dataset.name = (it.n + " " + (it.k || "")).toLowerCase();
         const badge = it.badge ? `<span class="badge ${it.badge}">${badgeText[it.badge]}</span>` : "";
         a.innerHTML = `${badge}<div class="thumb"><img src="${IC}${it.img}" alt="${it.n}" loading="lazy"></div><span>${it.n}</span>`;
         g.appendChild(a);
@@ -321,7 +324,7 @@
     // ── Índice A–Z (gerado de todos os itens) ──
     const secOf = {uteis:"Mais Úteis", consultas:"OSINT", downloads:"Download", ler:"LER", links:"Útil", dti:"DTI", geral:"Geral"};
     const all = [];
-    data.forEach(sec => sec.items.forEach(it => { if (it.n && it.u && !it.internal) all.push({n:it.n, u:it.u, tag:secOf[sec.id]||""}); }));
+    data.forEach(sec => sec.items.forEach(it => { if (it.n && it.u && !it.internal) all.push({n:it.n, u:it.u, k:it.k||"", tag:secOf[sec.id]||""}); }));
     all.sort((a,b) => a.n.localeCompare(b.n, "pt", {sensitivity:"base"}));
     const azSec = document.createElement("section");
     azSec.id = "todos";
@@ -331,7 +334,7 @@
     all.forEach(it => {
       const a = document.createElement("a");
       a.href = it.u; a.target = "_blank"; a.rel = "noopener noreferrer";
-      a.dataset.name = it.n.toLowerCase();
+      a.dataset.name = (it.n + " " + it.k).toLowerCase();
       a.innerHTML = `${it.n}<span class="tag">${it.tag}</span>`;
       azBox.appendChild(a);
     });
