@@ -354,7 +354,25 @@
           el.style.display = match ? "" : "none";
           if (match) visibleInSec++;
         });
-        // esconde subheads soltos e seção vazia
+        const grid = sec.querySelector(".grid");
+        if (grid) {
+          let currentSubhead = null;
+          let visibleCards = 0;
+          const updateSubhead = () => {
+            if (currentSubhead) currentSubhead.style.display = visibleCards ? "" : "none";
+          };
+          [...grid.children].forEach(el => {
+            if (el.classList.contains("subhead")) {
+              updateSubhead();
+              currentSubhead = el;
+              visibleCards = 0;
+            } else if (currentSubhead && el.classList.contains("card") && el.style.display !== "none") {
+              visibleCards++;
+            }
+          });
+          updateSubhead();
+        }
+        // esconde seção vazia
         sec.style.display = visibleInSec ? "" : "none";
         if (visibleInSec) anyVisible = true;
       });
