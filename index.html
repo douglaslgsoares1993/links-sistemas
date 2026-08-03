@@ -293,6 +293,7 @@
     ];
 
     const badgeText = {old:"Antigo", forense:"Forense", rede:"Rede PCPE"};
+    const norm = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
     const app = document.getElementById("app");
 
     data.forEach(sec => {
@@ -312,7 +313,7 @@
         a.className = "card" + (it.mail ? " mail" : "");
         a.href = it.u;
         if (!it.internal){ a.target = "_blank"; a.rel = "noopener noreferrer"; }
-        a.dataset.name = (it.n + " " + (it.k || "")).toLowerCase();
+        a.dataset.name = norm(it.n.replace(/\bPCPE\b/g, "PCPE Polícia") + " " + (it.k || ""));
         const badge = it.badge ? `<span class="badge ${it.badge}">${badgeText[it.badge]}</span>` : "";
         a.innerHTML = `${badge}<div class="thumb"><img src="${IC}${it.img}" alt="${it.n}" loading="lazy"></div><span>${it.n}</span>`;
         g.appendChild(a);
@@ -334,7 +335,7 @@
     all.forEach(it => {
       const a = document.createElement("a");
       a.href = it.u; a.target = "_blank"; a.rel = "noopener noreferrer";
-      a.dataset.name = (it.n + " " + it.k).toLowerCase();
+      a.dataset.name = norm(it.n.replace(/\bPCPE\b/g, "PCPE Polícia") + " " + it.k);
       a.innerHTML = `${it.n}<span class="tag">${it.tag}</span>`;
       azBox.appendChild(a);
     });
@@ -345,7 +346,7 @@
     const search = document.getElementById("search");
     const noresult = document.getElementById("noresult");
     search.addEventListener("input", () => {
-      const q = search.value.trim().toLowerCase();
+      const q = norm(search.value);
       let anyVisible = false;
       document.querySelectorAll("main section").forEach(sec => {
         let visibleInSec = 0;
