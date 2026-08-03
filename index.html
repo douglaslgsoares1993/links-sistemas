@@ -116,6 +116,7 @@
 
   footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:44px}
   footer .stripe{height:4px;background:var(--gold);max-width:120px;margin:0 auto 14px;border-radius:2px}
+  footer .updated{color:var(--muted);font-size:.68rem;margin-top:4px}
 
   @media(max-width:520px){
     .chrome-brand .name .l1{font-size:1rem}
@@ -168,6 +169,7 @@
   <footer>
     <div class="stripe"></div>
     Sistemas PCPE — acesso rápido aos sistemas da Polícia Civil de Pernambuco.
+    <div class="updated">atualizado em 03/08/2026</div>
   </footer>
 
   <script>
@@ -330,9 +332,9 @@
     });
 
     // ── Índice A–Z (gerado de todos os itens) ──
-    const secOf = {uteis:"Mais Úteis", consultas:"OSINT", downloads:"Download", ler:"LER", links:"Útil", dti:"DTI", geral:"Geral"};
+    const secOf = {uteis:"Mais Úteis", ferramentas:"Ferramenta", consultas:"OSINT", downloads:"Download", ler:"LER", links:"Útil", dti:"DTI", geral:"Geral"};
     const all = [];
-    data.forEach(sec => sec.items.forEach(it => { if (it.n && it.u && !it.internal) all.push({n:it.n, u:it.u, k:it.k||"", tag:secOf[sec.id]||""}); }));
+    data.forEach(sec => sec.items.forEach(it => { if (it.n && it.u) all.push({n:it.n, u:it.u, k:it.k||"", tag:secOf[sec.id]||"", internal:!!it.internal}); }));
     all.sort((a,b) => a.n.localeCompare(b.n, "pt", {sensitivity:"base"}));
     const azSec = document.createElement("section");
     azSec.id = "todos";
@@ -341,7 +343,8 @@
     azBox.className = "az";
     all.forEach(it => {
       const a = document.createElement("a");
-      a.href = it.u; a.target = "_blank"; a.rel = "noopener noreferrer";
+      a.href = it.u;
+      if (!it.internal){ a.target = "_blank"; a.rel = "noopener noreferrer"; }
       a.dataset.name = norm(it.n.replace(/\bPCPE\b/g, "PCPE Polícia") + " " + it.k);
       a.innerHTML = `${it.n}<span class="tag">${it.tag}</span>`;
       azBox.appendChild(a);
