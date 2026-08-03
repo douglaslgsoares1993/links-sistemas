@@ -313,7 +313,8 @@
     ];
 
     const badgeText = {old:"Antigo", forense:"Forense", rede:"Rede PCPE"};
-    const norm = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+    const norm = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase().replace(/[^a-z0-9]+/g, "").trim();
     const app = document.getElementById("app");
 
     data.forEach(sec => {
