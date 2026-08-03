@@ -50,6 +50,11 @@
   }
   #search:focus{outline:none;border-color:var(--gold)}
   .search-wrap::after{content:"🔎";position:absolute;right:16px;top:50%;transform:translateY(-50%);opacity:.6}
+  .search-wrap kbd{
+    position:absolute;right:44px;top:50%;transform:translateY(-50%);color:var(--muted);
+    font:inherit;font-size:.72rem;border:1px solid var(--line);border-radius:4px;padding:1px 5px;
+  }
+  .search-wrap:focus-within kbd,#search:not(:placeholder-shown)+kbd{display:none}
   nav{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
   nav a{
     color:var(--txt);text-decoration:none;font-weight:600;font-size:.82rem;
@@ -117,6 +122,7 @@
     .chrome-setor{display:none}
     .grid{grid-template-columns:repeat(auto-fill,minmax(128px,1fr))}
     .az{columns:2 140px}
+    .search-wrap kbd{display:none}
   }
 </style>
 </head>
@@ -141,6 +147,7 @@
   <div class="toolbar">
     <div class="search-wrap">
       <input id="search" type="search" placeholder="Buscar sistema, consulta ou ferramenta…" autocomplete="off" />
+      <kbd>/</kbd>
     </div>
     <nav>
       <a href="#uteis" class="hot">★ Mais Úteis</a>
@@ -345,7 +352,7 @@
     // ── Busca / filtro ──
     const search = document.getElementById("search");
     const noresult = document.getElementById("noresult");
-    search.addEventListener("input", () => {
+    const filter = () => {
       const q = norm(search.value);
       let anyVisible = false;
       document.querySelectorAll("main section").forEach(sec => {
@@ -378,6 +385,29 @@
         if (visibleInSec) anyVisible = true;
       });
       noresult.style.display = anyVisible ? "none" : "block";
+    };
+    search.addEventListener("input", filter);
+    search.addEventListener("keydown", e => {
+      if (e.key === "Escape") {
+        search.value = "";
+        filter();
+        search.blur();
+      } else if (e.key === "Enter") {
+        const firstVisible = [...document.querySelectorAll("main .card")].find(el =>
+          el.style.display !== "none" && el.closest("section").style.display !== "none"
+        );
+        if (!firstVisible) return;
+        if (firstVisible.target === "_blank") window.open(firstVisible.href, "_blank", "noopener");
+        else window.location.href = firstVisible.href;
+      }
+    });
+    document.addEventListener("keydown", e => {
+      if (e.key !== "/") return;
+      const active = document.activeElement;
+      const editable = ["INPUT", "TEXTAREA", "SELECT"].includes(active.tagName) || active.isContentEditable;
+      if (editable) return;
+      e.preventDefault();
+      search.focus();
     });
   </script>
 </body>
