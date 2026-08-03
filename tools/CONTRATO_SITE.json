@@ -1,0 +1,21 @@
+{
+  "version": "2026.08.03.1",
+  "links": 93,
+  "externalLinks": 91,
+  "internalLinks": 2,
+  "subheads": 7,
+  "sections": 8,
+  "sectionIds": [
+    "uteis",
+    "ferramentas",
+    "consultas",
+    "downloads",
+    "ler",
+    "links",
+    "dti",
+    "geral"
+  ],
+  "dataSha256": "fcefe0a2940f578a4f271978ee81a12a847d3ede76112072b101bf2e033f0aa5",
+  "maisUteisSha256": "055ca275591e724e1345df5b21dec34bb93deb9051bb7287e9210dcca6bf1baa"
+}
+
