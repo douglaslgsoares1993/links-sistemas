@@ -1,8 +1,8 @@
 {
-  "version": "2026.08.03.1",
+  "version": "2026.08.05.1",
   "links": 93,
-  "externalLinks": 91,
-  "internalLinks": 2,
+  "externalLinks": 87,
+  "internalLinks": 6,
   "subheads": 7,
   "sections": 8,
   "sectionIds": [
@@ -15,7 +15,6 @@
     "dti",
     "geral"
   ],
-  "dataSha256": "fcefe0a2940f578a4f271978ee81a12a847d3ede76112072b101bf2e033f0aa5",
+  "dataSha256": "d36f4b7ef8cbdd089920b3bd26731d39d8a247f67004007e1da6299ed11f910c",
   "maisUteisSha256": "055ca275591e724e1345df5b21dec34bb93deb9051bb7287e9210dcca6bf1baa"
 }
-
