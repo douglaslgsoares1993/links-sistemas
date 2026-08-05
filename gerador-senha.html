@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#000000" />
+<meta name="referrer" content="no-referrer" />
+<meta name="description" content="Gerador de senha forte que roda inteiramente no seu navegador — a senha não é enviada, salva nem registrada em lugar nenhum." />
+<title>Gerador de Senha — Sistemas PCPE</title>
+<link rel="icon" href="icon/bandeiraPernambuco.png" />
+<style>
+  :root{--black:#000;--black-soft:#0d0d0d;--panel:#141414;--panel-h:#1e1e1e;--gold:#c9a14a;--gold-light:#e0bf6d;--txt:#f2f2f2;--muted:#9a9a9a;--line:#2a2a2a;--danger:#b3261e;--ok:#3fae66;--warn:#d59b3a}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',system-ui,Segoe UI,Arial,sans-serif;background:var(--black-soft);color:var(--txt);min-height:100vh;padding-bottom:60px;line-height:1.55;overflow-x:hidden}
+  .chrome-bar{background:var(--black);display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;min-height:96px;flex-wrap:wrap}
+  .chrome-brand{display:flex;align-items:center;gap:16px}
+  .chrome-brand img{height:60px;width:auto;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+  .chrome-brand .name{display:flex;flex-direction:column;gap:2px;color:#fff}
+  .chrome-brand .name .l1{font-weight:800;font-size:1.2rem}
+  .chrome-brand .name .l2{font-weight:400;font-size:.68rem;letter-spacing:.4em;color:#cfcfcf}
+  .back{color:var(--gold-light);text-decoration:none;font-weight:600;font-size:.85rem;border:1px solid var(--line);padding:8px 14px;border-radius:999px;white-space:nowrap}
+  .back:hover{background:var(--gold);color:#000;border-color:var(--gold)}
+  .chrome-stripe{height:8px;background:var(--gold)}
+  main{max-width:900px;margin:0 auto;padding:0 18px}
+  h1{font-size:1.7rem;margin:34px 0 6px}
+  h1 .sub{display:block;font-size:.8rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px}
+  .lead{color:var(--muted);margin-bottom:8px}
+  section{margin-top:34px}
+  h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.03em;border-bottom:2px solid var(--gold);padding-bottom:8px;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+  h2 .bar{width:6px;height:20px;background:var(--gold);border-radius:2px}
+
+  .tool{background:var(--panel);border:1px solid rgba(201,161,74,.4);border-radius:14px;padding:20px}
+  .privacy{display:flex;align-items:flex-start;gap:8px;color:var(--ok);font-size:.85rem;font-weight:600;margin-bottom:16px}
+
+  .out{display:flex;gap:10px;align-items:stretch;flex-wrap:wrap}
+  .out .box{flex:1 1 260px;min-width:0;background:var(--black-soft);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;align-items:center;min-height:64px}
+  .out .box.strong{border-color:var(--gold)}
+  #senha{font-family:ui-monospace,Consolas,monospace;font-size:1.15rem;word-break:break-all;color:var(--gold-light);width:100%;letter-spacing:.02em}
+  #senha.vazio{color:var(--muted);font-family:inherit;font-size:.95rem;letter-spacing:0}
+  .out .acoes{display:flex;flex-direction:column;gap:8px;justify-content:center}
+
+  button{font-family:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--panel-h);color:var(--txt);font-weight:600;font-size:.85rem;padding:9px 14px;transition:.15s}
+  button:hover:not(:disabled){border-color:var(--gold);color:var(--gold-light)}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  button.primary{background:var(--gold);color:#000;border-color:var(--gold);font-weight:800}
+  button.primary:hover:not(:disabled){background:var(--gold-light);color:#000}
+  button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+  .linha-gerar{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+  .linha-gerar button.primary{flex:1 1 200px}
+
+  fieldset{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-top:18px}
+  legend{font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-light);padding:0 6px}
+  .tam{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .tam input[type=range]{flex:1 1 200px;min-width:140px;accent-color:var(--gold)}
+  .tam input[type=number]{width:80px;padding:7px 9px;border-radius:8px;border:1px solid var(--line);background:var(--black-soft);color:var(--txt);font-family:inherit;font-size:.95rem;text-align:center}
+  .opcoes{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px}
+  .opcoes label{display:flex;align-items:flex-start;gap:9px;background:var(--black-soft);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:.88rem;cursor:pointer}
+  .opcoes label:hover{border-color:var(--gold)}
+  .opcoes input{margin-top:3px;accent-color:var(--gold);flex:none}
+  .opcoes .ex{display:block;color:var(--muted);font-size:.76rem;font-family:ui-monospace,Consolas,monospace;word-break:break-all}
+
+  .forca{margin-top:18px}
+  .forca .barra{height:10px;background:var(--line);border-radius:6px;overflow:hidden}
+  .forca .barra i{display:block;height:100%;width:0;background:var(--danger);transition:width .2s,background .2s}
+  .forca .txt{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:8px;font-size:.85rem}
+  .forca .nivel{font-weight:800}
+  .forca .bits{color:var(--muted);font-family:ui-monospace,Consolas,monospace}
+
+  .aviso{margin-top:14px;font-size:.86rem;border-radius:8px;padding:10px 13px;display:none}
+  .aviso.on{display:block}
+  .aviso.erro{background:rgba(179,38,30,.14);border:1px solid var(--danger);color:#f0b8b4}
+  .aviso.ok{background:rgba(63,174,102,.12);border:1px solid var(--ok);color:#a9e2c0}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+  .cbox{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px}
+  .cbox h3{font-size:.95rem;color:var(--gold-light);margin-bottom:4px}
+  .cbox p{font-size:.85rem;color:var(--muted)}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:46px}
+  footer .stripe{height:4px;background:var(--gold);max-width:120px;margin:0 auto 14px;border-radius:2px}
+  @media(max-width:520px){
+    .chrome-bar{padding:14px 16px}
+    .chrome-brand .name .l2{display:none}
+    .chrome-brand img{height:48px}
+    main{padding:0 14px}
+    .out .acoes{flex-direction:row;width:100%}
+    .out .acoes button{flex:1}
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="chrome-bar">
+      <div class="chrome-brand">
+        <img src="icon/brasaoHeader.png" alt="Brasão PCPE" />
+        <div class="name"><span class="l1">SISTEMAS PCPE</span><span class="l2">POLÍCIA CIVIL DE PERNAMBUCO</span></div>
+      </div>
+      <a class="back" href="index.html#uteis">← Voltar aos Sistemas</a>
+    </div>
+    <div class="chrome-stripe"></div>
+  </header>
+
+  <main>
+    <h1><span class="sub">Segurança</span>Gerador de Senha</h1>
+    <p class="lead">Gera senhas fortes usando o gerador criptográfico do próprio navegador. Nada é enviado, salvo ou registrado.</p>
+
+    <section id="gerador">
+      <h2><span class="bar"></span>Gerar senha</h2>
+      <div class="tool">
+        <p class="privacy">🔒 A senha é criada dentro do seu computador e some quando você fecha a página. Sem servidor, sem histórico, sem armazenamento.</p>
+
+        <div class="out">
+          <div class="box strong">
+            <span id="senha" class="vazio">Clique em “Gerar senha” para começar.</span>
+          </div>
+          <div class="acoes">
+            <button type="button" id="btn-copiar" disabled>Copiar</button>
+            <button type="button" id="btn-ver" disabled aria-pressed="true">Ocultar</button>
+          </div>
+        </div>
+
+        <div class="linha-gerar">
+          <button type="button" id="btn-gerar" class="primary">Gerar senha</button>
+        </div>
+
+        <div class="aviso" id="aviso" role="alert"></div>
+        <p id="status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+
+        <fieldset>
+          <legend>Comprimento</legend>
+          <div class="tam">
+            <input type="range" id="tam-range" min="8" max="64" value="20" step="1"
+                   aria-label="Comprimento da senha (controle deslizante)" />
+            <input type="number" id="tam-num" min="8" max="64" value="20" step="1"
+                   aria-label="Comprimento da senha em número de caracteres" />
+            <span class="lead" style="margin:0;font-size:.82rem">de 8 a 64 caracteres</span>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Conjuntos de caracteres</legend>
+          <div class="opcoes">
+            <label><input type="checkbox" id="op-maiusculas" checked />
+              <span>Maiúsculas<span class="ex">A B C … Z</span></span></label>
+            <label><input type="checkbox" id="op-minusculas" checked />
+              <span>Minúsculas<span class="ex">a b c … z</span></span></label>
+            <label><input type="checkbox" id="op-numeros" checked />
+              <span>Números<span class="ex">0 1 2 … 9</span></span></label>
+            <label><input type="checkbox" id="op-simbolos" checked />
+              <span>Símbolos<span class="ex">!#$%&amp;*+-=?</span></span></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Ajustes</legend>
+          <div class="opcoes">
+            <label><input type="checkbox" id="op-ambiguos" />
+              <span>Evitar caracteres parecidos<span class="ex">tira I l 1 O 0 o S 5 Z 2</span></span></label>
+          </div>
+        </fieldset>
+
+        <div class="forca">
+          <div class="barra"><i id="forca-barra"></i></div>
+          <div class="txt">
+            <span class="nivel" id="forca-nivel">Nenhuma senha gerada</span>
+            <span class="bits" id="forca-bits">—</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="orientacao">
+      <h2><span class="bar"></span>Como usar bem</h2>
+      <div class="cards">
+        <div class="cbox"><h3>Tamanho vence esperteza</h3><p>Uma senha longa e simples costuma resistir mais que uma curta e cheia de símbolos. Abaixo de 12 caracteres, não use.</p></div>
+        <div class="cbox"><h3>Uma senha por sistema</h3><p>Senha repetida em vários sistemas: vazou um, caíram todos. Gere uma para cada.</p></div>
+        <div class="cbox"><h3>Não decore, guarde</h3><p>Use um gerenciador de senhas. Anotar em papel colado no monitor ou em arquivo .txt aberto não vale.</p></div>
+        <div class="cbox"><h3>Caracteres parecidos</h3><p>Se a senha vai ser digitada olhando papel, marque “evitar caracteres parecidos”. Reduz a força, mas evita erro de digitação.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="stripe"></div>
+    Sistemas PCPE — gerador de senha local. A senha nunca sai do seu navegador.
+  </footer>
+
+  <script>
+    "use strict";
+
+    var CONJUNTOS = {
+      maiusculas: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+      minusculas: "abcdefghijklmnopqrstuvwxyz",
+      numeros: "0123456789",
+      simbolos: "!#$%&*+-=?" + "@" + "^_~.,:;<>()[]{}/|"
+    };
+    var AMBIGUOS = "Il1O0oS5Z2";
+
+    var el = function (id) { return document.getElementById(id); };
+    var saida = el("senha");
+    var btnGerar = el("btn-gerar");
+    var btnCopiar = el("btn-copiar");
+    var btnVer = el("btn-ver");
+    var aviso = el("aviso");
+    var regiaoStatus = el("status");
+    var tamRange = el("tam-range");
+    var tamNum = el("tam-num");
+    var forcaBarra = el("forca-barra");
+    var forcaNivel = el("forca-nivel");
+    var forcaBits = el("forca-bits");
+    var caixas = {
+      maiusculas: el("op-maiusculas"),
+      minusculas: el("op-minusculas"),
+      numeros: el("op-numeros"),
+      simbolos: el("op-simbolos")
+    };
+    var opAmbiguos = el("op-ambiguos");
+
+    // A senha viva existe apenas nesta variável, em memória. Nunca é persistida.
+    var senhaAtual = "";
+    var visivel = true;
+
+    /* ── Sorteio sem viés: descarta os valores que cairiam na sobra da divisão ── */
+    function inteiroAleatorio(limite) {
+      if (limite <= 0) throw new Error("limite inválido");
+      var maximo = Math.floor(4294967296 / limite) * limite;
+      var buffer = new Uint32Array(1);
+      var valor;
+      do {
+        crypto.getRandomValues(buffer);
+        valor = buffer[0];
+      } while (valor >= maximo);
+      return valor % limite;
+    }
+
+    function sortearDe(alfabeto) {
+      return alfabeto.charAt(inteiroAleatorio(alfabeto.length));
+    }
+
+    function embaralhar(lista) {
+      for (var i = lista.length - 1; i > 0; i--) {
+        var j = inteiroAleatorio(i + 1);
+        var troca = lista[i];
+        lista[i] = lista[j];
+        lista[j] = troca;
+      }
+      return lista;
+    }
+
+    function limparAmbiguos(alfabeto) {
+      var limpo = "";
+      for (var i = 0; i < alfabeto.length; i++) {
+        if (AMBIGUOS.indexOf(alfabeto.charAt(i)) === -1) limpo += alfabeto.charAt(i);
+      }
+      return limpo;
+    }
+
+    function conjuntosAtivos() {
+      var ativos = [];
+      Object.keys(caixas).forEach(function (chave) {
+        if (!caixas[chave].checked) return;
+        var alfabeto = CONJUNTOS[chave];
+        if (opAmbiguos.checked) alfabeto = limparAmbiguos(alfabeto);
+        if (alfabeto.length > 0) ativos.push(alfabeto);
+      });
+      return ativos;
+    }
+
+    function mostrarAviso(texto, tipo) {
+      aviso.textContent = texto;
+      aviso.className = "aviso on " + tipo;
+    }
+
+    function esconderAviso() {
+      aviso.textContent = "";
+      aviso.className = "aviso";
+    }
+
+    function anunciar(texto) {
+      regiaoStatus.textContent = texto;
+    }
+
+    function classificar(bits) {
+      if (bits < 45) return { nome: "Fraca", cor: "var(--danger)", pct: 25 };
+      if (bits < 65) return { nome: "Razoável", cor: "var(--warn)", pct: 50 };
+      if (bits < 90) return { nome: "Forte", cor: "var(--gold)", pct: 75 };
+      return { nome: "Muito forte", cor: "var(--ok)", pct: 100 };
+    }
+
+    function atualizarForca(comprimento, tamanhoAlfabeto) {
+      if (!comprimento || !tamanhoAlfabeto) {
+        forcaBarra.style.width = "0";
+        forcaNivel.textContent = "Nenhuma senha gerada";
+        forcaNivel.style.color = "var(--muted)";
+        forcaBits.textContent = "—";
+        return "";
+      }
+      var bits = Math.floor(comprimento * (Math.log(tamanhoAlfabeto) / Math.log(2)));
+      var nivel = classificar(bits);
+      forcaBarra.style.width = nivel.pct + "%";
+      forcaBarra.style.background = nivel.cor;
+      forcaNivel.textContent = nivel.nome;
+      forcaNivel.style.color = nivel.cor;
+      forcaBits.textContent = "≈ " + bits + " bits de entropia · alfabeto de " + tamanhoAlfabeto + " caracteres";
+      return nivel.nome + ", cerca de " + bits + " bits de entropia";
+    }
+
+    function renderizar() {
+      if (!senhaAtual) {
+        saida.textContent = "Clique em “Gerar senha” para começar.";
+        saida.className = "vazio";
+        return;
+      }
+      saida.className = "";
+      saida.textContent = visivel ? senhaAtual : new Array(senhaAtual.length + 1).join("•");
+    }
+
+    function sincronizarTamanho(origem) {
+      var bruto = parseInt(origem.value, 10);
+      if (isNaN(bruto)) return;
+      var valor = Math.min(64, Math.max(8, bruto));
+      tamRange.value = String(valor);
+      tamNum.value = String(valor);
+    }
+
+    function tamanhoEscolhido() {
+      var valor = parseInt(tamNum.value, 10);
+      if (isNaN(valor)) valor = 20;
+      return Math.min(64, Math.max(8, valor));
+    }
+
+    function atualizarBotaoGerar() {
+      var ativos = conjuntosAtivos();
+      btnGerar.disabled = ativos.length === 0;
+      if (ativos.length === 0) {
+        mostrarAviso("Marque pelo menos um conjunto de caracteres para poder gerar a senha.", "erro");
+      } else if (aviso.classList.contains("erro")) {
+        esconderAviso();
+      }
+    }
+
+    function gerar() {
+      var ativos = conjuntosAtivos();
+      if (ativos.length === 0) {
+        mostrarAviso("Marque pelo menos um conjunto de caracteres para poder gerar a senha.", "erro");
+        anunciar("Nenhum conjunto de caracteres selecionado. A senha não foi gerada.");
+        return;
+      }
+
+      var comprimento = tamanhoEscolhido();
+      tamNum.value = String(comprimento);
+      tamRange.value = String(comprimento);
+
+      var alfabetoTotal = ativos.join("");
+      var caracteres = [];
+
+      // Um caractere garantido de cada conjunto marcado.
+      ativos.forEach(function (alfabeto) { caracteres.push(sortearDe(alfabeto)); });
+      while (caracteres.length < comprimento) {
+        caracteres.push(sortearDe(alfabetoTotal));
+      }
+      // Se o comprimento pedido for menor que o nº de conjuntos, corta e recompleta do total.
+      if (caracteres.length > comprimento) caracteres.length = comprimento;
+
+      senhaAtual = embaralhar(caracteres).join("");
+      visivel = true;
+      btnVer.textContent = "Ocultar";
+      btnVer.setAttribute("aria-pressed", "true");
+      btnCopiar.disabled = false;
+      btnVer.disabled = false;
+      btnCopiar.textContent = "Copiar";
+      renderizar();
+      esconderAviso();
+
+      var resumo = atualizarForca(comprimento, alfabetoTotal.length);
+      anunciar("Senha de " + comprimento + " caracteres gerada. " + resumo + ".");
+    }
+
+    function copiar() {
+      if (!senhaAtual) return;
+      var sucesso = function () {
+        btnCopiar.textContent = "Copiado!";
+        mostrarAviso("Senha copiada para a área de transferência. Cole no sistema e limpe a área de transferência depois.", "ok");
+        anunciar("Senha copiada para a área de transferência.");
+        setTimeout(function () { btnCopiar.textContent = "Copiar"; }, 1800);
+      };
+      var falha = function () {
+        mostrarAviso("Não foi possível copiar automaticamente. Selecione a senha na tela e copie com Ctrl+C.", "erro");
+        anunciar("Falha ao copiar a senha. Copie manualmente.");
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(senhaAtual).then(sucesso, falha);
+      } else {
+        falha();
+      }
+    }
+
+    function alternarVisibilidade() {
+      if (!senhaAtual) return;
+      visivel = !visivel;
+      btnVer.textContent = visivel ? "Ocultar" : "Mostrar";
+      btnVer.setAttribute("aria-pressed", visivel ? "true" : "false");
+      renderizar();
+      anunciar(visivel ? "Senha visível na tela." : "Senha oculta na tela.");
+    }
+
+    btnGerar.addEventListener("click", gerar);
+    btnCopiar.addEventListener("click", copiar);
+    btnVer.addEventListener("click", alternarVisibilidade);
+
+    tamRange.addEventListener("input", function () { sincronizarTamanho(tamRange); });
+    tamNum.addEventListener("input", function () { sincronizarTamanho(tamNum); });
+    tamNum.addEventListener("blur", function () { sincronizarTamanho(tamNum); });
+
+    Object.keys(caixas).forEach(function (chave) {
+      caixas[chave].addEventListener("change", atualizarBotaoGerar);
+    });
+    opAmbiguos.addEventListener("change", atualizarBotaoGerar);
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "Enter") return;
+      var ativo = document.activeElement;
+      if (ativo && (ativo.tagName === "BUTTON" || ativo.tagName === "A")) return;
+      if (btnGerar.disabled) return;
+      e.preventDefault();
+      gerar();
+    });
+
+    atualizarBotaoGerar();
+    renderizar();
+  </script>
+</body>
+</html>

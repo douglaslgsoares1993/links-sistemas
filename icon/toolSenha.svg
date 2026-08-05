@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Gerador de senha">
+  <path d="M32 44V32a18 18 0 0 1 36 0v12" fill="none" stroke="#c9a14a" stroke-width="7" stroke-linecap="round"/>
+  <rect x="20" y="44" width="60" height="40" rx="7" fill="#0d0d0d" stroke="#c9a14a" stroke-width="3.5"/>
+  <circle cx="34" cy="64" r="4.5" fill="#e0bf6d"/>
+  <circle cx="50" cy="64" r="4.5" fill="#e0bf6d"/>
+  <circle cx="66" cy="64" r="4.5" fill="#e0bf6d"/>
+  <path d="M50 12v-6M64 16l4-5M36 16l-4-5" stroke="#e0bf6d" stroke-width="3" stroke-linecap="round"/>
+</svg>
