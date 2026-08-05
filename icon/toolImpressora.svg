@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Teste de impressora">
+  <rect x="28" y="10" width="44" height="24" fill="#0d0d0d" stroke="#c9a14a" stroke-width="3"/>
+  <rect x="14" y="34" width="72" height="34" rx="6" fill="#0d0d0d" stroke="#c9a14a" stroke-width="3.5"/>
+  <circle cx="74" cy="44" r="4" fill="#e0bf6d"/>
+  <rect x="28" y="60" width="44" height="30" fill="#ffffff" stroke="#c9a14a" stroke-width="3"/>
+  <rect x="34" y="66" width="8" height="8" fill="#c9a14a"/>
+  <rect x="46" y="66" width="8" height="8" fill="#0d0d0d"/>
+  <rect x="58" y="66" width="8" height="8" fill="#e0bf6d"/>
+  <path d="M34 80h32M34 85h22" stroke="#0d0d0d" stroke-width="2.5" stroke-linecap="round"/>
+</svg>
