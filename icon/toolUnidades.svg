@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Endereços e telefones das unidades">
+  <path d="M36 8c-13 0-23 10-23 23 0 17 23 40 23 40s23-23 23-40c0-13-10-23-23-23z" fill="#0d0d0d" stroke="#c9a14a" stroke-width="3.5"/>
+  <circle cx="36" cy="30" r="8" fill="#e0bf6d"/>
+  <rect x="58" y="46" width="34" height="44" fill="#0d0d0d" stroke="#c9a14a" stroke-width="3.5"/>
+  <rect x="65" y="54" width="8" height="8" fill="#e0bf6d"/>
+  <rect x="78" y="54" width="8" height="8" fill="#e0bf6d"/>
+  <rect x="65" y="68" width="8" height="8" fill="#e0bf6d"/>
+  <rect x="78" y="68" width="8" height="8" fill="#e0bf6d"/>
+  <rect x="70" y="80" width="10" height="10" fill="#c9a14a"/>
+</svg>

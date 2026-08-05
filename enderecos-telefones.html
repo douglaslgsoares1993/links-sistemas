@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#000000" />
+<meta name="referrer" content="no-referrer" />
+<meta name="description" content="Consulta de endereços e telefones das unidades da Polícia Civil de Pernambuco — busca local, sem mapa incorporado e sem rastreador." />
+<title>Endereços e Telefones — Sistemas PCPE</title>
+<link rel="icon" href="icon/bandeiraPernambuco.png" />
+<style>
+  :root{--black:#000;--black-soft:#0d0d0d;--panel:#141414;--panel-h:#1e1e1e;--gold:#c9a14a;--gold-light:#e0bf6d;--txt:#f2f2f2;--muted:#9a9a9a;--line:#2a2a2a;--ok:#3fae66;--warn:#d59b3a}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,Segoe UI,Arial,sans-serif;background:var(--black-soft);color:var(--txt);min-height:100vh;padding-bottom:60px;line-height:1.55;overflow-x:hidden}
+  .chrome-bar{background:var(--black);display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;min-height:96px;flex-wrap:wrap}
+  .chrome-brand{display:flex;align-items:center;gap:16px}
+  .chrome-brand img{height:60px;width:auto;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+  .chrome-brand .name{display:flex;flex-direction:column;gap:2px;color:#fff}
+  .chrome-brand .name .l1{font-weight:800;font-size:1.2rem}
+  .chrome-brand .name .l2{font-weight:400;font-size:.68rem;letter-spacing:.4em;color:#cfcfcf}
+  .back{color:var(--gold-light);text-decoration:none;font-weight:600;font-size:.85rem;border:1px solid var(--line);padding:8px 14px;border-radius:999px;white-space:nowrap}
+  .back:hover{background:var(--gold);color:#000;border-color:var(--gold)}
+  .chrome-stripe{height:8px;background:var(--gold)}
+  main{max-width:1000px;margin:0 auto;padding:0 18px}
+  h1{font-size:1.7rem;margin:34px 0 6px}
+  h1 .sub{display:block;font-size:.8rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px}
+  .lead{color:var(--muted);margin-bottom:8px}
+
+  .fonte{background:rgba(213,155,58,.1);border:1px solid var(--warn);border-radius:10px;padding:12px 15px;font-size:.85rem;margin-top:16px}
+  .fonte strong{color:var(--gold-light)}
+  .fonte a{color:var(--gold-light)}
+
+  .filtros{position:sticky;top:0;z-index:20;background:rgba(13,13,13,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:14px 0 12px;margin-top:22px}
+  .filtros .linha{display:flex;gap:10px;flex-wrap:wrap}
+  .filtros .campo{display:flex;flex-direction:column;gap:4px;flex:1 1 210px;min-width:0}
+  .filtros label{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-light)}
+  input[type=search],select{
+    font-family:inherit;font-size:.92rem;color:var(--txt);background:var(--panel);
+    border:1px solid var(--line);border-radius:8px;padding:10px 12px;width:100%;min-width:0;
+  }
+  input[type=search]:focus,select:focus,button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-color:var(--gold)}
+  .filtros .rodape{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:10px}
+  .contagem{font-size:.82rem;color:var(--muted)}
+  .contagem b{color:var(--gold-light)}
+
+  button{font-family:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--panel-h);color:var(--txt);font-weight:600;font-size:.82rem;padding:8px 14px;transition:.15s}
+  button:hover{border-color:var(--gold);color:var(--gold-light)}
+
+  .lista{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:20px}
+  .unidade{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:12px;padding:15px 17px;display:flex;flex-direction:column;gap:9px;min-width:0}
+  .unidade:hover{background:var(--panel-h);border-color:var(--gold);border-left-color:var(--gold-light)}
+  .unidade .topo{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+  .unidade h2{font-size:.96rem;font-weight:700;line-height:1.3;word-break:break-word}
+  .unidade .sigla{display:block;font-size:.7rem;font-weight:800;letter-spacing:.06em;color:var(--gold-light);margin-bottom:3px;word-break:break-word}
+  .unidade .tag{flex:none;font-size:.62rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;background:var(--black-soft);border:1px solid var(--line);color:var(--muted);border-radius:6px;padding:3px 7px}
+  .unidade .end{font-size:.85rem;color:#d8d8d8;word-break:break-word}
+  .unidade .end .mun{display:block;color:var(--muted);font-size:.8rem}
+  .unidade ul{list-style:none;display:grid;gap:5px}
+  .unidade ul li{display:flex;justify-content:space-between;gap:10px;font-size:.85rem;border-top:1px dashed var(--line);padding-top:5px;flex-wrap:wrap}
+  .unidade ul li .rot{color:var(--muted);min-width:0;word-break:break-word}
+  .unidade ul li a{color:var(--gold-light);text-decoration:none;font-weight:700;white-space:nowrap}
+  .unidade ul li a:hover{text-decoration:underline}
+  .unidade .acoes{margin-top:2px}
+
+  .vazio{display:none;text-align:center;color:var(--muted);padding:44px 16px;font-size:.95rem}
+  .vazio.on{display:block}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:46px}
+  footer .stripe{height:4px;background:var(--gold);max-width:120px;margin:0 auto 14px;border-radius:2px}
+
+  @media(max-width:520px){
+    .chrome-bar{padding:14px 16px}
+    .chrome-brand .name .l2{display:none}
+    .chrome-brand img{height:48px}
+    main{padding:0 14px}
+    .lista{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="chrome-bar">
+      <div class="chrome-brand">
+        <img src="icon/brasaoHeader.png" alt="Brasão PCPE" />
+        <div class="name"><span class="l1">SISTEMAS PCPE</span><span class="l2">POLÍCIA CIVIL DE PERNAMBUCO</span></div>
+      </div>
+      <a class="back" href="index.html#uteis">← Voltar aos Sistemas</a>
+    </div>
+    <div class="chrome-stripe"></div>
+  </header>
+
+  <main>
+    <h1><span class="sub">Consulta</span>Endereços e Telefones</h1>
+    <p class="lead">Unidades da Polícia Civil de Pernambuco: endereço e telefones de atendimento. A busca roda dentro da página; nada é consultado fora.</p>
+
+    <div class="fonte" id="fonte">Carregando a relação de unidades…</div>
+
+    <div class="filtros">
+      <div class="linha">
+        <div class="campo">
+          <label for="busca">Buscar unidade</label>
+          <input type="search" id="busca" placeholder="Nome, sigla, bairro ou município…" autocomplete="off"
+                 aria-label="Buscar unidade por nome, sigla, bairro ou município" aria-describedby="contagem" />
+        </div>
+        <div class="campo">
+          <label for="f-municipio">Município</label>
+          <select id="f-municipio"><option value="">Todos os municípios</option></select>
+        </div>
+        <div class="campo">
+          <label for="f-tipo">Tipo de unidade</label>
+          <select id="f-tipo"><option value="">Todos os tipos</option></select>
+        </div>
+      </div>
+      <div class="rodape">
+        <span class="contagem" id="contagem">—</span>
+        <button type="button" id="btn-limpar">Limpar filtros</button>
+      </div>
+    </div>
+
+    <div class="lista" id="lista"></div>
+    <div class="vazio" id="vazio">Nenhuma unidade encontrada com esses filtros.</div>
+    <p id="status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+  </main>
+
+  <footer>
+    <div class="stripe"></div>
+    Sistemas PCPE — consulta local de endereços e telefones. Sem mapa incorporado e sem rastreador.
+  </footer>
+
+  <script src="dados/unidades-pcpe.js"></script>
+  <script>
+    "use strict";
+
+    var UNIDADES = window.UNIDADES_PCPE || [];
+    var FONTE = window.UNIDADES_PCPE_FONTE || null;
+
+    var el = function (id) { return document.getElementById(id); };
+    var lista = el("lista");
+    var vazio = el("vazio");
+    var busca = el("busca");
+    var selMunicipio = el("f-municipio");
+    var selTipo = el("f-tipo");
+    var contagem = el("contagem");
+    var regiaoStatus = el("status");
+
+    var normalizar = function (s) {
+      return String(s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+    };
+
+    /* ── Procedência do dado, sempre visível ── */
+    (function mostrarFonte() {
+      var caixa = el("fonte");
+      caixa.innerHTML = "";
+      if (!UNIDADES.length) {
+        caixa.textContent = "A relação de unidades não pôde ser carregada nesta página. " +
+          "Confirme se o arquivo dados/unidades-pcpe.js está presente.";
+        return;
+      }
+      var texto = document.createElement("div");
+      texto.innerHTML = "<strong>Fonte:</strong> " + (FONTE ? FONTE.fonte : "relação oficial da PCPE") +
+        " · <strong>documento de " + (FONTE ? FONTE.data : "data não informada") + "</strong>. " +
+        "Ramal muda: confirme antes de usar em ato oficial. Não constam e-mails nem ramais de uso interno.";
+      var link = document.createElement("a");
+      link.href = "https://www2.pc.pe.gov.br/enderecos";
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = "Conferir no portal oficial da PCPE";
+      var linha = document.createElement("div");
+      linha.style.marginTop = "6px";
+      linha.appendChild(link);
+      caixa.appendChild(texto);
+      caixa.appendChild(linha);
+    })();
+
+    /* ── Opções dos filtros, tiradas dos próprios dados ── */
+    (function montarFiltros() {
+      var municipios = [];
+      var tipos = [];
+      UNIDADES.forEach(function (u) {
+        if (u.municipio && municipios.indexOf(u.municipio) === -1) municipios.push(u.municipio);
+        if (u.tipo && tipos.indexOf(u.tipo) === -1) tipos.push(u.tipo);
+      });
+      municipios.sort(function (a, b) { return a.localeCompare(b, "pt"); });
+      tipos.sort(function (a, b) { return a.localeCompare(b, "pt"); });
+      municipios.forEach(function (m) {
+        var o = document.createElement("option");
+        o.value = m; o.textContent = m;
+        selMunicipio.appendChild(o);
+      });
+      tipos.forEach(function (t) {
+        var o = document.createElement("option");
+        o.value = t; o.textContent = t;
+        selTipo.appendChild(o);
+      });
+    })();
+
+    /* ── Cartões ── */
+    function enderecoCompleto(u) {
+      var partes = [u.endereco, u.bairro, u.municipio].filter(function (p) { return p; });
+      return partes.join(", ");
+    }
+
+    function montarCartao(u, indice) {
+      var cartao = document.createElement("article");
+      cartao.className = "unidade";
+      cartao.dataset.indice = String(indice);
+      cartao.dataset.chave = normalizar([u.sigla, u.nome, u.bairro, u.municipio, u.tipo].join(" "));
+
+      var topo = document.createElement("div");
+      topo.className = "topo";
+      var titulo = document.createElement("h2");
+      var sigla = document.createElement("span");
+      sigla.className = "sigla";
+      sigla.textContent = u.sigla;
+      titulo.appendChild(sigla);
+      titulo.appendChild(document.createTextNode(u.nome));
+      var tag = document.createElement("span");
+      tag.className = "tag";
+      tag.textContent = u.tipo;
+      topo.appendChild(titulo);
+      topo.appendChild(tag);
+
+      var endereco = document.createElement("p");
+      endereco.className = "end";
+      endereco.textContent = [u.endereco, u.bairro].filter(function (p) { return p; }).join(" — ");
+      var municipio = document.createElement("span");
+      municipio.className = "mun";
+      municipio.textContent = u.municipio ? u.municipio + " / PE" : "Município não informado no documento";
+      endereco.appendChild(municipio);
+
+      var telefones = document.createElement("ul");
+      (u.telefones || []).forEach(function (t) {
+        var item = document.createElement("li");
+        var rotulo = document.createElement("span");
+        rotulo.className = "rot";
+        rotulo.textContent = t.r;
+        var chamada = document.createElement("a");
+        chamada.href = "tel:+55" + t.n.replace(/\D/g, "");
+        chamada.textContent = t.n;
+        item.appendChild(rotulo);
+        item.appendChild(chamada);
+        telefones.appendChild(item);
+      });
+
+      var acoes = document.createElement("div");
+      acoes.className = "acoes";
+      var mapa = document.createElement("button");
+      mapa.type = "button";
+      mapa.textContent = "📍 Abrir no mapa";
+      mapa.setAttribute("aria-label", "Abrir o endereço de " + u.nome + " no mapa, em nova aba");
+      mapa.addEventListener("click", function () { abrirNoMapa(u); });
+      acoes.appendChild(mapa);
+
+      cartao.appendChild(topo);
+      cartao.appendChild(endereco);
+      if (telefones.children.length) cartao.appendChild(telefones);
+      cartao.appendChild(acoes);
+      return cartao;
+    }
+
+    /* Só sai da página quando o usuário clica, e ele é avisado disso. */
+    function abrirNoMapa(u) {
+      var consulta = enderecoCompleto(u) + ", PE";
+      var url = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(consulta);
+      window.open(url, "_blank", "noopener");
+      anunciar("Abrindo o endereço de " + u.nome + " no mapa, em outra aba.");
+    }
+
+    function anunciar(texto) { regiaoStatus.textContent = texto; }
+
+    (function montarLista() {
+      var fragmento = document.createDocumentFragment();
+      UNIDADES.forEach(function (u, i) { fragmento.appendChild(montarCartao(u, i)); });
+      lista.appendChild(fragmento);
+    })();
+
+    /* ── Filtro ── */
+    function filtrar() {
+      var termo = normalizar(busca.value);
+      var municipio = selMunicipio.value;
+      var tipo = selTipo.value;
+      var visiveis = 0;
+
+      for (var i = 0; i < lista.children.length; i++) {
+        var cartao = lista.children[i];
+        var u = UNIDADES[Number(cartao.dataset.indice)];
+        var combina = (!termo || cartao.dataset.chave.indexOf(termo) !== -1) &&
+                      (!municipio || u.municipio === municipio) &&
+                      (!tipo || u.tipo === tipo);
+        cartao.style.display = combina ? "" : "none";
+        if (combina) visiveis++;
+      }
+
+      vazio.classList.toggle("on", visiveis === 0);
+      contagem.innerHTML = "<b>" + visiveis + "</b> de " + UNIDADES.length + " unidades";
+      anunciar(visiveis + " unidade" + (visiveis === 1 ? "" : "s") + " na lista.");
+    }
+
+    busca.addEventListener("input", filtrar);
+    selMunicipio.addEventListener("change", filtrar);
+    selTipo.addEventListener("change", filtrar);
+    busca.addEventListener("keydown", function (e) {
+      if (e.key !== "Escape") return;
+      busca.value = "";
+      filtrar();
+    });
+    el("btn-limpar").addEventListener("click", function () {
+      busca.value = "";
+      selMunicipio.value = "";
+      selTipo.value = "";
+      filtrar();
+      busca.focus();
+    });
+
+    filtrar();
+  </script>
+</body>
+</html>
