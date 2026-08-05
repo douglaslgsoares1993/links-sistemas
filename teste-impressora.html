@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#000000" />
+<meta name="referrer" content="no-referrer" />
+<meta name="description" content="Folha de teste A4 para impressora — cores, escala de cinza, linhas finas, alinhamento e legibilidade. Gerada no próprio navegador, sem consulta externa." />
+<title>Teste de Impressora — Sistemas PCPE</title>
+<link rel="icon" href="icon/bandeiraPernambuco.png" />
+<style>
+  :root{--black:#000;--black-soft:#0d0d0d;--panel:#141414;--panel-h:#1e1e1e;--gold:#c9a14a;--gold-light:#e0bf6d;--txt:#f2f2f2;--muted:#9a9a9a;--line:#2a2a2a;--ok:#3fae66}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,Segoe UI,Arial,sans-serif;background:var(--black-soft);color:var(--txt);min-height:100vh;padding-bottom:60px;line-height:1.55;overflow-x:hidden}
+  .chrome-bar{background:var(--black);display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;min-height:96px;flex-wrap:wrap}
+  .chrome-brand{display:flex;align-items:center;gap:16px}
+  .chrome-brand img{height:60px;width:auto;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+  .chrome-brand .name{display:flex;flex-direction:column;gap:2px;color:#fff}
+  .chrome-brand .name .l1{font-weight:800;font-size:1.2rem}
+  .chrome-brand .name .l2{font-weight:400;font-size:.68rem;letter-spacing:.4em;color:#cfcfcf}
+  .back{color:var(--gold-light);text-decoration:none;font-weight:600;font-size:.85rem;border:1px solid var(--line);padding:8px 14px;border-radius:999px;white-space:nowrap}
+  .back:hover{background:var(--gold);color:#000;border-color:var(--gold)}
+  .chrome-stripe{height:8px;background:var(--gold)}
+  main{max-width:980px;margin:0 auto;padding:0 18px}
+  h1{font-size:1.7rem;margin:34px 0 6px}
+  h1 .sub{display:block;font-size:.8rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px}
+  .lead{color:var(--muted);margin-bottom:8px}
+  section{margin-top:32px}
+  h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.03em;border-bottom:2px solid var(--gold);padding-bottom:8px;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+  h2 .bar{width:6px;height:20px;background:var(--gold);border-radius:2px}
+
+  .painel{background:var(--panel);border:1px solid rgba(201,161,74,.4);border-radius:14px;padding:20px}
+  .privacy{display:flex;align-items:flex-start;gap:8px;color:var(--ok);font-size:.85rem;font-weight:600;margin-bottom:16px}
+  .acoes{display:flex;gap:10px;flex-wrap:wrap}
+  button{font-family:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--panel-h);color:var(--txt);font-weight:600;font-size:.88rem;padding:11px 18px;transition:.15s}
+  button:hover{border-color:var(--gold);color:var(--gold-light)}
+  button.primary{background:var(--gold);color:#000;border-color:var(--gold);font-weight:800;flex:1 1 220px}
+  button.primary:hover{background:var(--gold-light);color:#000}
+  button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  .dica{margin-top:14px;font-size:.85rem;color:var(--muted)}
+  .dica strong{color:var(--gold-light)}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+  .cbox{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px}
+  .cbox h3{font-size:.95rem;color:var(--gold-light);margin-bottom:4px}
+  .cbox p{font-size:.85rem;color:var(--muted)}
+
+  /* ── Pré-visualização da folha ── */
+  .papel-scroll{overflow-x:auto;background:#333;border:1px solid var(--line);border-radius:12px;padding:14px}
+  .folha{
+    width:210mm;min-height:297mm;background:#fff;color:#000;margin:0 auto;padding:10mm;
+    font-family:'Inter',system-ui,Segoe UI,Arial,sans-serif;line-height:1.35;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;position:relative;
+  }
+  .folha *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .folha .cab{display:flex;justify-content:space-between;align-items:flex-end;gap:8mm;border-bottom:1.2mm solid #000;padding:9mm 13mm 2mm 0}
+  .folha .cab .tt{font-size:14pt;font-weight:800;letter-spacing:.04em}
+  .folha .cab .tt small{display:block;font-size:7pt;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
+  .folha .cab .meta{font-size:6.5pt;text-align:right;line-height:1.5;max-width:95mm;word-break:break-word}
+  .folha .bloco{margin-top:3.2mm;break-inside:avoid}
+  .folha .bloco > h3{font-size:7.5pt;font-weight:800;letter-spacing:.12em;text-transform:uppercase;border-bottom:.3mm solid #000;padding-bottom:.6mm;margin-bottom:1.6mm}
+  .folha .obs{font-size:5.6pt;margin-top:.8mm;line-height:1.25}
+
+  .faixa{display:flex;height:11mm;border:.3mm solid #000}
+  .faixa div{flex:1;display:flex;align-items:flex-end;justify-content:center;font-size:5.5pt;font-weight:700;padding-bottom:.8mm}
+  .cinza{display:flex;height:9.5mm;border:.3mm solid #000}
+  .cinza div{flex:1;display:flex;align-items:flex-end;justify-content:center;font-size:5pt;font-weight:700;padding-bottom:.6mm}
+  .pretos{display:flex;gap:3mm;align-items:stretch}
+  .pretos .chapado{flex:2;background:#000;height:13mm}
+  .pretos .texto-neg{flex:3;background:#000;color:#fff;height:13mm;display:flex;align-items:center;justify-content:center;text-align:center;font-size:8pt;font-weight:700;padding:0 3mm}
+  .pretos .quadriculado{
+    flex:2;height:13mm;border:.3mm solid #000;
+    background-image:linear-gradient(#000 .2mm,transparent .2mm),linear-gradient(90deg,#000 .2mm,transparent .2mm);
+    background-size:2mm 2mm;
+  }
+
+  .geometria{display:flex;gap:6mm;align-items:center;flex-wrap:wrap}
+  .geometria .fig{text-align:center;font-size:5.5pt;font-weight:700}
+  .quad{width:17mm;height:17mm;border:.4mm solid #000;margin-bottom:1mm}
+  .quad.solido{background:#000}
+  .circ{width:17mm;height:17mm;border:.4mm solid #000;border-radius:50%;margin-bottom:1mm}
+  .circ.solido{background:#000}
+
+  .tipos p{margin:.3mm 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tipos .t4{font-size:4pt}.tipos .t5{font-size:5pt}.tipos .t6{font-size:6pt}
+  .tipos .t8{font-size:8pt}.tipos .t10{font-size:10pt}.tipos .t12{font-size:12pt}
+  .tipos .t16{font-size:14pt;font-weight:700}.tipos .t24{font-size:19pt;font-weight:800}
+  .tipos .serifa{font-family:Georgia,'Times New Roman',serif}
+  .tipos .mono{font-family:ui-monospace,Consolas,'Courier New',monospace}
+
+  .marca-canto{position:absolute;width:12mm;height:12mm}
+  .marca-canto.ne{top:2mm;right:2mm}.marca-canto.no{top:2mm;left:2mm}
+  .marca-canto.se{bottom:2mm;right:2mm}.marca-canto.so{bottom:2mm;left:2mm}
+  .folha .rodape{margin-top:3mm;border-top:.3mm solid #000;padding:1.5mm 13mm 0;font-size:6pt;display:flex;justify-content:space-between;gap:6mm}
+
+  footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:46px}
+  footer .stripe{height:4px;background:var(--gold);max-width:120px;margin:0 auto 14px;border-radius:2px}
+
+  @media(max-width:520px){
+    .chrome-bar{padding:14px 16px}
+    .chrome-brand .name .l2{display:none}
+    .chrome-brand img{height:48px}
+    main{padding:0 14px}
+    .papel-scroll{padding:8px}
+  }
+
+  /* ── Impressão: só a folha vai para o papel ── */
+  @media print{
+    @page{size:A4 portrait;margin:0}
+    html,body{background:#fff;color:#000;padding:0;margin:0;overflow:visible}
+    body > header,main > section:not(#folha-secao),footer,.nao-imprime{display:none !important}
+    main{max-width:none;padding:0;margin:0}
+    section#folha-secao{margin:0}
+    section#folha-secao > h2{display:none}
+    .papel-scroll{overflow:visible;background:none;border:0;border-radius:0;padding:0}
+    .folha{width:210mm;height:297mm;min-height:0;margin:0;padding:7mm;box-shadow:none;break-inside:avoid;page-break-after:avoid}
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="chrome-bar">
+      <div class="chrome-brand">
+        <img src="icon/brasaoHeader.png" alt="Brasão PCPE" />
+        <div class="name"><span class="l1">SISTEMAS PCPE</span><span class="l2">POLÍCIA CIVIL DE PERNAMBUCO</span></div>
+      </div>
+      <a class="back" href="index.html#uteis">← Voltar aos Sistemas</a>
+    </div>
+    <div class="chrome-stripe"></div>
+  </header>
+
+  <main>
+    <section class="nao-imprime" id="topo">
+      <h1><span class="sub">Manutenção</span>Teste de Impressora</h1>
+      <p class="lead">Uma folha A4 de teste com cores, escala de cinza, linhas finas, geometria e tipos. Serve para diagnosticar cabeça entupida, cartucho no fim, tracionamento torto e perda de nitidez.</p>
+      <div class="painel">
+        <p class="privacy">🔒 A folha é montada dentro do seu navegador. Nada é consultado na internet, nenhum IP é lido, nada é enviado.</p>
+        <div class="acoes">
+          <button type="button" class="primary" id="btn-imprimir">🖨 Imprimir folha de teste</button>
+          <button type="button" id="btn-atualizar">Atualizar data e dados do equipamento</button>
+        </div>
+        <p class="dica"><strong>Na caixa de impressão:</strong> escolha papel A4, margens “Padrão” ou “Nenhuma”, marque <strong>“Gráficos de plano de fundo”</strong> (senão as cores e os cinzas saem em branco) e desmarque “Ajustar à página”, para as medidas em milímetro saírem certas.</p>
+      </div>
+    </section>
+
+    <section class="nao-imprime" id="como-ler">
+      <h2><span class="bar"></span>Como ler o resultado</h2>
+      <div class="cards">
+        <div class="cbox"><h3>Faixa de cor falhada</h3><p>Uma cor sai clara, riscada ou não sai: bico entupido ou cartucho/toner daquela cor no fim. Rode a limpeza de cabeça e imprima de novo.</p></div>
+        <div class="cbox"><h3>Escala de cinza travada</h3><p>Se os degraus de 10% a 40% saem todos iguais, o toner está no fim ou a densidade está alta demais.</p></div>
+        <div class="cbox"><h3>Linhas finas sumindo</h3><p>Se as linhas mais finas desaparecem, a resolução está baixa ou o cilindro/cabeça está gasto.</p></div>
+        <div class="cbox"><h3>Faixa clara repetida</h3><p>Falha na mesma altura em todas as folhas: sujeira no cilindro ou risco no fusor.</p></div>
+        <div class="cbox"><h3>Círculo ovalado</h3><p>O círculo de 17 mm saiu oval ou o quadrado saiu retangular: tracionamento irregular do papel.</p></div>
+        <div class="cbox"><h3>Régua fora de medida</h3><p>Meça a régua com uma régua de verdade. Se 100 mm não dão 100 mm, a impressão foi redimensionada — desmarque “Ajustar à página”.</p></div>
+      </div>
+    </section>
+
+    <section id="folha-secao">
+      <h2 class="nao-imprime"><span class="bar"></span>Pré-visualização da folha</h2>
+      <div class="papel-scroll">
+        <div class="folha" id="folha">
+          <svg class="marca-canto no" viewBox="0 0 40 40" aria-hidden="true"><path d="M0 20h40M20 0v40" stroke="#000" stroke-width="1" fill="none"/><circle cx="20" cy="20" r="9" stroke="#000" stroke-width="1" fill="none"/><circle cx="20" cy="20" r="2" fill="#000"/></svg>
+          <svg class="marca-canto ne" viewBox="0 0 40 40" aria-hidden="true"><path d="M0 20h40M20 0v40" stroke="#000" stroke-width="1" fill="none"/><circle cx="20" cy="20" r="9" stroke="#000" stroke-width="1" fill="none"/><circle cx="20" cy="20" r="2" fill="#000"/></svg>
+          <svg class="marca-canto so" viewBox="0 0 40 40" aria-hidden="true"><path d="M0 20h40M20 0v40" stroke="#000" stroke-width="1" fill="none"/><circle cx="20" cy="20" r="9" stroke="#000" stroke-width="1" fill="none"/><circle cx="20" cy="20" r="2" fill="#000"/></svg>
+          <svg class="marca-canto se" viewBox="0 0 40 40" aria-hidden="true"><path d="M0 20h40M20 0v40" stroke="#000" stroke-width="1" fill="none"/><circle cx="20" cy="20" r="9" stroke="#000" stroke-width="1" fill="none"/><circle cx="20" cy="20" r="2" fill="#000"/></svg>
+
+          <div class="cab">
+            <div class="tt"><small>Polícia Civil de Pernambuco</small>Folha de Teste de Impressão — A4</div>
+            <div class="meta" id="meta">Gerando informações do equipamento…</div>
+          </div>
+
+          <div class="bloco">
+            <h3>1 · Cores primárias RGB</h3>
+            <div class="faixa">
+              <div style="background:#FF0000;color:#fff">VERMELHO</div>
+              <div style="background:#00FF00;color:#000">VERDE</div>
+              <div style="background:#0000FF;color:#fff">AZUL</div>
+              <div style="background:#FFFFFF;color:#000;box-shadow:inset 0 0 0 .2mm #000">BRANCO</div>
+            </div>
+          </div>
+
+          <div class="bloco">
+            <h3>2 · Cores de processo C M Y K</h3>
+            <div class="faixa">
+              <div style="background:#00AEEF;color:#000">CIANO</div>
+              <div style="background:#EC008C;color:#fff">MAGENTA</div>
+              <div style="background:#FFF200;color:#000">AMARELO</div>
+              <div style="background:#000000;color:#fff">PRETO</div>
+            </div>
+            <p class="obs">Aproximação em RGB das cores de processo — é assim que o navegador envia para a impressora. Cada faixa deve sair sólida, sem risco e sem clarear no meio.</p>
+          </div>
+
+          <div class="bloco">
+            <h3>3 · Escala de cinza (0% a 100%)</h3>
+            <div class="cinza" id="escala-cinza"></div>
+            <p class="obs">Os onze degraus devem ser distinguíveis um do outro, sem dois seguidos iguais.</p>
+          </div>
+
+          <div class="bloco">
+            <h3>4 · Preto chapado, negativo e retícula</h3>
+            <div class="pretos">
+              <div class="chapado"></div>
+              <div class="texto-neg">TEXTO EM NEGATIVO · 15ª DESEC · TESTE DE IMPRESSÃO</div>
+              <div class="quadriculado"></div>
+            </div>
+            <p class="obs">O preto chapado deve ser uniforme. O texto em negativo não pode “fechar”. A retícula de 2 mm não pode virar mancha.</p>
+          </div>
+
+          <div class="bloco">
+            <h3>5 · Linhas finas — horizontais e verticais</h3>
+            <svg viewBox="0 0 190 30" width="190mm" height="30mm" role="img" aria-label="Linhas finas horizontais e verticais de espessura crescente">
+              <g stroke="#000" fill="none">
+                <line x1="0" y1="2"  x2="92" y2="2"  stroke-width="0.10"/>
+                <line x1="0" y1="6"  x2="92" y2="6"  stroke-width="0.20"/>
+                <line x1="0" y1="10" x2="92" y2="10" stroke-width="0.30"/>
+                <line x1="0" y1="14" x2="92" y2="14" stroke-width="0.50"/>
+                <line x1="0" y1="18" x2="92" y2="18" stroke-width="0.75"/>
+                <line x1="0" y1="23" x2="92" y2="23" stroke-width="1.00"/>
+                <line x1="0" y1="28" x2="92" y2="28" stroke-width="1.50"/>
+                <line x1="100" y1="0" x2="100" y2="30" stroke-width="0.10"/>
+                <line x1="108" y1="0" x2="108" y2="30" stroke-width="0.20"/>
+                <line x1="116" y1="0" x2="116" y2="30" stroke-width="0.30"/>
+                <line x1="126" y1="0" x2="126" y2="30" stroke-width="0.50"/>
+                <line x1="138" y1="0" x2="138" y2="30" stroke-width="0.75"/>
+                <line x1="152" y1="0" x2="152" y2="30" stroke-width="1.00"/>
+                <line x1="170" y1="0" x2="170" y2="30" stroke-width="1.50"/>
+                <path d="M0 0 L92 30 M92 0 L0 30" stroke-width="0.15" opacity="0.6"/>
+              </g>
+            </svg>
+            <p class="obs">Espessuras de 0,10 mm a 1,50 mm. A linha mais fina pode ficar suave, mas precisa aparecer inteira, sem trechos faltando.</p>
+          </div>
+
+          <div class="bloco">
+            <h3>6 · Geometria e proporção</h3>
+            <div class="geometria">
+              <div class="fig"><div class="quad"></div>QUADRADO 17 mm</div>
+              <div class="fig"><div class="quad solido"></div>QUADRADO SÓLIDO</div>
+              <div class="fig"><div class="circ"></div>CÍRCULO Ø 17 mm</div>
+              <div class="fig"><div class="circ solido"></div>CÍRCULO SÓLIDO</div>
+              <div class="fig">
+                <svg viewBox="0 0 100 14" width="100mm" height="14mm" role="img" aria-label="Régua de zero a 100 milímetros">
+                  <g stroke="#000" fill="#000">
+                    <line x1="0" y1="11" x2="100" y2="11" stroke-width="0.3"/>
+                    <g id="regua-marcas"></g>
+                  </g>
+                </svg>
+                RÉGUA 100 mm — CONFIRA COM RÉGUA DE VERDADE
+              </div>
+            </div>
+          </div>
+
+          <div class="bloco tipos">
+            <h3>7 · Legibilidade dos tipos</h3>
+            <p class="t4">4 pt — Polícia Civil de Pernambuco · 15ª DESEC · Belo Jardim · teste de legibilidade em corpo muito pequeno.</p>
+            <p class="t5">5 pt — Polícia Civil de Pernambuco · 15ª DESEC · Belo Jardim · teste de legibilidade em corpo muito pequeno.</p>
+            <p class="t6">6 pt — Polícia Civil de Pernambuco · 15ª DESEC · Belo Jardim · teste de legibilidade em corpo pequeno.</p>
+            <p class="t8">8 pt — Inquérito, ofício, representação: a leitura precisa sair limpa neste corpo.</p>
+            <p class="t10 serifa">10 pt serifada — Sequência de conferência: 0 O o · 1 l I · 5 S · 2 Z · 8 B · rgqp.</p>
+            <p class="t12 mono">12 pt mono — HASH 0123 4567 89ab cdef · [ ] { } ( ) / \ | &lt; &gt; ~ ^</p>
+            <p class="t16">14 pt — Documento oficial em destaque</p>
+            <p class="t24">19 pt — TESTE OK</p>
+          </div>
+
+          <div class="rodape">
+            <span>Sistemas PCPE · folha de teste gerada no navegador, sem consulta externa</span>
+            <span id="rodape-data">—</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="stripe"></div>
+    Sistemas PCPE — folha de teste de impressora. Montada localmente; nenhum dado sai do computador.
+  </footer>
+
+  <script>
+    "use strict";
+
+    /* ── Escala de cinza: 11 degraus de 0% a 100% ── */
+    (function montarEscalaCinza() {
+      var alvo = document.getElementById("escala-cinza");
+      var html = "";
+      for (var pct = 0; pct <= 100; pct += 10) {
+        var tom = Math.round(255 * (100 - pct) / 100);
+        var rgb = "rgb(" + tom + "," + tom + "," + tom + ")";
+        var tinta = pct >= 60 ? "#fff" : "#000";
+        html += '<div style="background:' + rgb + ';color:' + tinta + '">' + pct + "%</div>";
+      }
+      alvo.innerHTML = html;
+    })();
+
+    /* ── Régua: traço a cada 1 mm, médio a cada 5 mm, alto a cada 10 mm ── */
+    (function montarRegua() {
+      var alvo = document.getElementById("regua-marcas");
+      var partes = "";
+      for (var mm = 0; mm <= 100; mm++) {
+        var altura = mm % 10 === 0 ? 7 : (mm % 5 === 0 ? 4 : 2);
+        partes += '<line x1="' + mm + '" y1="' + (11 - altura) + '" x2="' + mm + '" y2="11" stroke-width="0.2"/>';
+      }
+      alvo.innerHTML = partes;
+    })();
+
+    /* ── Dados locais do equipamento: só o que o próprio navegador informa ── */
+    function coletarInformacoes() {
+      var agora = new Date();
+      var dataHora = agora.toLocaleString("pt-BR", {
+        weekday: "long", day: "2-digit", month: "2-digit", year: "numeric",
+        hour: "2-digit", minute: "2-digit"
+      });
+
+      var linhas = [];
+      linhas.push("<strong>Emitida em:</strong> " + dataHora);
+      linhas.push("<strong>Tela:</strong> " + screen.width + " × " + screen.height + " px · " +
+                  (window.devicePixelRatio || 1) + "× · " + (screen.colorDepth || "?") + " bits de cor");
+      linhas.push("<strong>Janela:</strong> " + window.innerWidth + " × " + window.innerHeight + " px");
+      linhas.push("<strong>Idioma:</strong> " + (navigator.language || "não informado") +
+                  " · <strong>Fuso:</strong> " + (Intl.DateTimeFormat().resolvedOptions().timeZone || "não informado"));
+      linhas.push("<strong>Navegador:</strong> " + navigator.userAgent);
+
+      document.getElementById("meta").innerHTML = linhas.join("<br>");
+      document.getElementById("rodape-data").textContent = dataHora;
+    }
+
+    document.getElementById("btn-imprimir").addEventListener("click", function () {
+      coletarInformacoes();
+      window.print();
+    });
+    document.getElementById("btn-atualizar").addEventListener("click", coletarInformacoes);
+
+    coletarInformacoes();
+  </script>
+</body>
+</html>

@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#000000" />
+<meta name="referrer" content="no-referrer" />
+<meta name="description" content="Relatório de serviços executados em unidade policial — preenchimento, pré-visualização e impressão/PDF, tudo no próprio navegador." />
+<title>Relatório de Serviços — Sistemas PCPE</title>
+<link rel="icon" href="icon/bandeiraPernambuco.png" />
+<style>
+  :root{--black:#000;--black-soft:#0d0d0d;--panel:#141414;--panel-h:#1e1e1e;--gold:#c9a14a;--gold-light:#e0bf6d;--txt:#f2f2f2;--muted:#9a9a9a;--line:#2a2a2a;--danger:#b3261e;--ok:#3fae66}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,Segoe UI,Arial,sans-serif;background:var(--black-soft);color:var(--txt);min-height:100vh;padding-bottom:60px;line-height:1.55;overflow-x:hidden}
+  .chrome-bar{background:var(--black);display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;min-height:96px;flex-wrap:wrap}
+  .chrome-brand{display:flex;align-items:center;gap:16px}
+  .chrome-brand img{height:60px;width:auto;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+  .chrome-brand .name{display:flex;flex-direction:column;gap:2px;color:#fff}
+  .chrome-brand .name .l1{font-weight:800;font-size:1.2rem}
+  .chrome-brand .name .l2{font-weight:400;font-size:.68rem;letter-spacing:.4em;color:#cfcfcf}
+  .back{color:var(--gold-light);text-decoration:none;font-weight:600;font-size:.85rem;border:1px solid var(--line);padding:8px 14px;border-radius:999px;white-space:nowrap}
+  .back:hover{background:var(--gold);color:#000;border-color:var(--gold)}
+  .chrome-stripe{height:8px;background:var(--gold)}
+  main{max-width:900px;margin:0 auto;padding:0 18px}
+  h1{font-size:1.7rem;margin:34px 0 6px}
+  h1 .sub{display:block;font-size:.8rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px}
+  .lead{color:var(--muted);margin-bottom:8px}
+  section{margin-top:32px}
+  h2{font-size:1.2rem;text-transform:uppercase;letter-spacing:.03em;border-bottom:2px solid var(--gold);padding-bottom:8px;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+  h2 .bar{width:6px;height:20px;background:var(--gold);border-radius:2px}
+
+  form{background:var(--panel);border:1px solid rgba(201,161,74,.4);border-radius:14px;padding:20px}
+  .privacy{display:flex;align-items:flex-start;gap:8px;color:var(--ok);font-size:.85rem;font-weight:600;margin-bottom:16px}
+  fieldset{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:16px}
+  legend{font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-light);padding:0 6px}
+  .campos{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+  .campo{display:flex;flex-direction:column;gap:5px;min-width:0}
+  .campo.largo{grid-column:1/-1}
+  .campo label{font-size:.82rem;font-weight:600}
+  .campo label .obrig{color:var(--gold);margin-left:2px}
+  .campo .ajuda{font-size:.74rem;color:var(--muted)}
+  input,textarea{
+    font-family:inherit;font-size:.92rem;color:var(--txt);background:var(--black-soft);
+    border:1px solid var(--line);border-radius:8px;padding:10px 12px;width:100%;min-width:0;
+  }
+  textarea{min-height:96px;resize:vertical;line-height:1.5}
+  input:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:var(--gold)}
+  input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--danger)}
+  .erro-campo{font-size:.78rem;color:#f0b8b4;min-height:0}
+  .erro-campo:empty{display:none}
+
+  .tecnico{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:10px;background:var(--black-soft)}
+  .tecnico .cabeca{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+  .tecnico .cabeca span{font-size:.74rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-light)}
+
+  button{font-family:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--panel-h);color:var(--txt);font-weight:600;font-size:.85rem;padding:9px 15px;transition:.15s}
+  button:hover:not(:disabled){border-color:var(--gold);color:var(--gold-light)}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  button.primary{background:var(--gold);color:#000;border-color:var(--gold);font-weight:800}
+  button.primary:hover{background:var(--gold-light);color:#000}
+  button.perigo:hover{border-color:var(--danger);color:#f0b8b4}
+  button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  .acoes{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+  .acoes button.primary{flex:1 1 200px}
+
+  .aviso{margin-top:14px;font-size:.86rem;border-radius:8px;padding:11px 14px;display:none}
+  .aviso.on{display:block}
+  .aviso.erro{background:rgba(179,38,30,.14);border:1px solid var(--danger);color:#f0b8b4}
+  .aviso.ok{background:rgba(63,174,102,.12);border:1px solid var(--ok);color:#a9e2c0}
+  .aviso.pergunta{background:rgba(201,161,74,.12);border:1px solid var(--gold);color:var(--gold-light)}
+  .aviso .confirma{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+  /* ── Pré-visualização / documento impresso ── */
+  #previa-secao{display:none}
+  #previa-secao.on{display:block}
+  .papel-scroll{overflow-x:auto;background:#333;border:1px solid var(--line);border-radius:12px;padding:14px}
+  .doc{
+    width:190mm;background:#fff;color:#000;margin:0 auto;padding:12mm 14mm;
+    font-family:Georgia,'Times New Roman',serif;font-size:11pt;line-height:1.5;
+  }
+  .doc .titulo{text-align:center;border-bottom:1.2mm solid #000;padding-bottom:3mm;margin-bottom:6mm}
+  .doc .titulo .l1{font-size:9pt;letter-spacing:.22em;text-transform:uppercase;font-family:Arial,Helvetica,sans-serif}
+  .doc .titulo .l2{font-size:16pt;font-weight:700;letter-spacing:.05em;margin-top:1.5mm}
+  .doc h3{font-size:10pt;font-family:Arial,Helvetica,sans-serif;letter-spacing:.14em;text-transform:uppercase;border-bottom:.3mm solid #000;padding-bottom:1mm;margin:6mm 0 2.5mm}
+  .doc .par{text-align:justify;white-space:pre-wrap;word-break:break-word}
+  .doc table{width:100%;border-collapse:collapse;font-size:10.5pt}
+  .doc table th,.doc table td{border:.3mm solid #000;padding:2mm 3mm;text-align:left;vertical-align:top}
+  .doc table th{background:#e9e9e9;font-family:Arial,Helvetica,sans-serif;font-size:9pt;letter-spacing:.06em;text-transform:uppercase;width:42mm}
+  .doc .assinaturas{display:flex;flex-wrap:wrap;gap:10mm;margin-top:16mm}
+  .doc .assinaturas .linha{flex:1 1 70mm;text-align:center;border-top:.3mm solid #000;padding-top:1.5mm;font-size:9.5pt}
+  .doc .assinaturas .linha small{display:block;font-size:8pt;color:#333}
+  .doc .nota{margin-top:8mm;font-size:8pt;font-family:Arial,Helvetica,sans-serif;color:#333;border-top:.2mm solid #999;padding-top:2mm}
+
+  footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:46px}
+  footer .stripe{height:4px;background:var(--gold);max-width:120px;margin:0 auto 14px;border-radius:2px}
+
+  @media(max-width:520px){
+    .chrome-bar{padding:14px 16px}
+    .chrome-brand .name .l2{display:none}
+    .chrome-brand img{height:48px}
+    main{padding:0 14px}
+    .papel-scroll{padding:8px}
+  }
+
+  @media print{
+    @page{size:A4 portrait;margin:12mm}
+    html,body{background:#fff;color:#000;padding:0;margin:0;overflow:visible}
+    body > header,footer,.nao-imprime,#previa-secao > h2{display:none !important}
+    main{max-width:none;padding:0;margin:0}
+    #previa-secao{display:block !important;margin:0}
+    .papel-scroll{overflow:visible;background:none;border:0;border-radius:0;padding:0}
+    .doc{width:auto;padding:0;margin:0}
+    .doc h3,.doc table,.doc .assinaturas{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="chrome-bar">
+      <div class="chrome-brand">
+        <img src="icon/brasaoHeader.png" alt="Brasão PCPE" />
+        <div class="name"><span class="l1">SISTEMAS PCPE</span><span class="l2">POLÍCIA CIVIL DE PERNAMBUCO</span></div>
+      </div>
+      <a class="back" href="index.html#uteis">← Voltar aos Sistemas</a>
+    </div>
+    <div class="chrome-stripe"></div>
+  </header>
+
+  <main>
+    <section class="nao-imprime" id="topo">
+      <h1><span class="sub">Atendimento técnico</span>Relatório de Serviços</h1>
+      <p class="lead">Registre o serviço executado na unidade, gere a pré-visualização e imprima ou salve em PDF. Nada é enviado nem guardado.</p>
+
+      <form id="formulario" novalidate>
+        <p class="privacy">🔒 Os dados ficam só nesta aba. Não vão para servidor nenhum e não são salvos no navegador — se recarregar a página, o formulário volta vazio.</p>
+
+        <fieldset>
+          <legend>Atendimento</legend>
+          <div class="campos">
+            <div class="campo">
+              <label for="f-data">Data e hora<span class="obrig" aria-hidden="true">*</span></label>
+              <input type="datetime-local" id="f-data" name="data" required aria-describedby="e-data" />
+              <p class="erro-campo" id="e-data" role="alert"></p>
+            </div>
+            <div class="campo">
+              <label for="f-unidade">Unidade policial<span class="obrig" aria-hidden="true">*</span></label>
+              <input type="text" id="f-unidade" name="unidade" required autocomplete="off"
+                     list="lista-unidades" placeholder="Ex.: 15ª DESEC — Belo Jardim"
+                     aria-describedby="a-unidade e-unidade" />
+              <datalist id="lista-unidades"></datalist>
+              <p class="ajuda" id="a-unidade">Texto livre. As sugestões vêm da relação oficial de unidades da PCPE, quando disponível.</p>
+              <p class="erro-campo" id="e-unidade" role="alert"></p>
+            </div>
+            <div class="campo largo">
+              <label for="f-demanda">Demanda solicitada<span class="obrig" aria-hidden="true">*</span></label>
+              <textarea id="f-demanda" name="demanda" required aria-describedby="a-demanda e-demanda"
+                        placeholder="O que a unidade pediu."></textarea>
+              <p class="ajuda" id="a-demanda">Descreva o problema como ele foi relatado, sem interpretar.</p>
+              <p class="erro-campo" id="e-demanda" role="alert"></p>
+            </div>
+            <div class="campo largo">
+              <label for="f-procedimentos">Procedimentos executados<span class="obrig" aria-hidden="true">*</span></label>
+              <textarea id="f-procedimentos" name="procedimentos" required aria-describedby="a-proc e-procedimentos"
+                        placeholder="O que foi feito, na ordem em que foi feito."></textarea>
+              <p class="ajuda" id="a-proc">Se algo ficou pendente, registre aqui o que ficou e por quê.</p>
+              <p class="erro-campo" id="e-procedimentos" role="alert"></p>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Técnicos que executaram</legend>
+          <div id="tecnicos"></div>
+          <button type="button" id="btn-add-tecnico">+ Adicionar técnico</button>
+          <p class="erro-campo" id="e-tecnicos" role="alert"></p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Usuário atendido</legend>
+          <div class="campos">
+            <div class="campo">
+              <label for="f-usuario-nome">Nome<span class="obrig" aria-hidden="true">*</span></label>
+              <input type="text" id="f-usuario-nome" name="usuarioNome" required autocomplete="off"
+                     aria-describedby="e-usuario-nome" />
+              <p class="erro-campo" id="e-usuario-nome" role="alert"></p>
+            </div>
+            <div class="campo">
+              <label for="f-usuario-mat">Matrícula<span class="obrig" aria-hidden="true">*</span></label>
+              <input type="text" id="f-usuario-mat" name="usuarioMat" required autocomplete="off"
+                     placeholder="Ex.: 000.000-0" aria-describedby="e-usuario-mat" />
+              <p class="erro-campo" id="e-usuario-mat" role="alert"></p>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="acoes">
+          <button type="submit" class="primary" id="btn-previa">Gerar pré-visualização</button>
+          <button type="button" id="btn-imprimir" disabled>🖨 Imprimir / salvar em PDF</button>
+          <button type="button" class="perigo" id="btn-limpar">Limpar formulário</button>
+        </div>
+
+        <div class="aviso" id="aviso" role="alert"></div>
+        <p id="status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+      </form>
+    </section>
+
+    <section id="previa-secao">
+      <h2><span class="bar"></span>Pré-visualização</h2>
+      <div class="papel-scroll">
+        <div class="doc" id="doc">
+          <div class="titulo">
+            <div class="l1">Polícia Civil de Pernambuco</div>
+            <div class="l2">RELATÓRIO DE SERVIÇOS</div>
+          </div>
+
+          <table>
+            <tr><th scope="row">Unidade policial</th><td id="d-unidade"></td></tr>
+            <tr><th scope="row">Data e hora</th><td id="d-data"></td></tr>
+          </table>
+
+          <h3>Demanda solicitada</h3>
+          <p class="par" id="d-demanda"></p>
+
+          <h3>Procedimentos executados</h3>
+          <p class="par" id="d-procedimentos"></p>
+
+          <h3>Técnicos responsáveis</h3>
+          <table id="d-tecnicos"></table>
+
+          <h3>Usuário atendido</h3>
+          <table>
+            <tr><th scope="row">Nome</th><td id="d-usuario-nome"></td></tr>
+            <tr><th scope="row">Matrícula</th><td id="d-usuario-mat"></td></tr>
+          </table>
+
+          <div class="assinaturas" id="d-assinaturas"></div>
+
+          <p class="nota">Documento preenchido na página Sistemas PCPE e impresso pelo próprio equipamento. Confira os dados antes de assinar.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="stripe"></div>
+    Sistemas PCPE — relatório de serviços. Preenchimento local; os dados não saem do navegador.
+  </footer>
+
+  <script src="dados/unidades-pcpe.js"></script>
+  <script>
+    "use strict";
+
+    var el = function (id) { return document.getElementById(id); };
+    var formulario = el("formulario");
+    var caixaTecnicos = el("tecnicos");
+    var previaSecao = el("previa-secao");
+    var btnImprimir = el("btn-imprimir");
+    var btnLimpar = el("btn-limpar");
+    var aviso = el("aviso");
+    var regiaoStatus = el("status");
+    var contadorTecnicos = 0;
+
+    /* ── Sugestões de unidade: só da relação oficial, quando o arquivo existir ── */
+    (function preencherUnidades() {
+      var base = window.UNIDADES_PCPE;
+      if (!base || !base.length) return;
+      var lista = el("lista-unidades");
+      var fragmento = document.createDocumentFragment();
+      base.forEach(function (u) {
+        var opcao = document.createElement("option");
+        opcao.value = u.sigla ? u.sigla + " — " + u.nome : u.nome;
+        fragmento.appendChild(opcao);
+      });
+      lista.appendChild(fragmento);
+    })();
+
+    /* ── Técnicos ── */
+    function adicionarTecnico(focar) {
+      contadorTecnicos++;
+      var indice = contadorTecnicos;
+      var bloco = document.createElement("div");
+      bloco.className = "tecnico";
+      bloco.dataset.tecnico = String(indice);
+      bloco.innerHTML =
+        '<div class="cabeca"><span>Técnico</span>' +
+        '<button type="button" class="perigo remover">Remover</button></div>' +
+        '<div class="campos">' +
+          '<div class="campo"><label for="t-nome-' + indice + '">Nome<span class="obrig" aria-hidden="true">*</span></label>' +
+          '<input type="text" id="t-nome-' + indice + '" class="t-nome" autocomplete="off" ' +
+          'aria-describedby="t-erro-' + indice + '" /></div>' +
+          '<div class="campo"><label for="t-mat-' + indice + '">Matrícula<span class="obrig" aria-hidden="true">*</span></label>' +
+          '<input type="text" id="t-mat-' + indice + '" class="t-mat" autocomplete="off" ' +
+          'placeholder="Ex.: 000.000-0" aria-describedby="t-erro-' + indice + '" /></div>' +
+        '</div>' +
+        '<p class="erro-campo" id="t-erro-' + indice + '" role="alert"></p>';
+      caixaTecnicos.appendChild(bloco);
+      bloco.querySelector(".remover").addEventListener("click", function () { removerTecnico(bloco); });
+      renumerarTecnicos();
+      if (focar) bloco.querySelector(".t-nome").focus();
+      anunciar("Técnico adicionado. Total: " + caixaTecnicos.children.length + ".");
+    }
+
+    function removerTecnico(bloco) {
+      if (caixaTecnicos.children.length <= 1) {
+        mostrarAviso("O relatório precisa de pelo menos um técnico. Em vez de remover, corrija os dados deste.", "erro");
+        return;
+      }
+      bloco.remove();
+      renumerarTecnicos();
+      anunciar("Técnico removido. Total: " + caixaTecnicos.children.length + ".");
+      el("btn-add-tecnico").focus();
+    }
+
+    function renumerarTecnicos() {
+      var blocos = caixaTecnicos.children;
+      for (var i = 0; i < blocos.length; i++) {
+        blocos[i].querySelector(".cabeca span").textContent = "Técnico " + (i + 1);
+        blocos[i].querySelector(".remover").disabled = blocos.length === 1;
+      }
+    }
+
+    /* ── Avisos e validação ── */
+    function mostrarAviso(texto, tipo) {
+      aviso.innerHTML = "";
+      aviso.textContent = texto;
+      aviso.className = "aviso on " + tipo;
+    }
+    function esconderAviso() { aviso.innerHTML = ""; aviso.className = "aviso"; }
+    function anunciar(texto) { regiaoStatus.textContent = texto; }
+
+    function marcarErro(campo, caixaErro, mensagem) {
+      campo.setAttribute("aria-invalid", "true");
+      caixaErro.textContent = mensagem;
+    }
+    function limparErro(campo, caixaErro) {
+      campo.removeAttribute("aria-invalid");
+      caixaErro.textContent = "";
+    }
+
+    var OBRIGATORIOS = [
+      ["f-data", "e-data", "Informe a data e a hora do atendimento."],
+      ["f-unidade", "e-unidade", "Informe a unidade policial atendida."],
+      ["f-demanda", "e-demanda", "Descreva a demanda solicitada."],
+      ["f-procedimentos", "e-procedimentos", "Descreva os procedimentos executados."],
+      ["f-usuario-nome", "e-usuario-nome", "Informe o nome do usuário atendido."],
+      ["f-usuario-mat", "e-usuario-mat", "Informe a matrícula do usuário atendido."]
+    ];
+
+    function validar() {
+      var primeiroInvalido = null;
+      var problemas = 0;
+
+      OBRIGATORIOS.forEach(function (item) {
+        var campo = el(item[0]);
+        var caixaErro = el(item[1]);
+        if (!campo.value.trim()) {
+          marcarErro(campo, caixaErro, item[2]);
+          problemas++;
+          if (!primeiroInvalido) primeiroInvalido = campo;
+        } else {
+          limparErro(campo, caixaErro);
+        }
+      });
+
+      var blocos = caixaTecnicos.children;
+      for (var i = 0; i < blocos.length; i++) {
+        var nome = blocos[i].querySelector(".t-nome");
+        var matricula = blocos[i].querySelector(".t-mat");
+        var caixaErro = blocos[i].querySelector(".erro-campo");
+        var faltando = [];
+        if (!nome.value.trim()) { nome.setAttribute("aria-invalid", "true"); faltando.push("o nome"); }
+        else { nome.removeAttribute("aria-invalid"); }
+        if (!matricula.value.trim()) { matricula.setAttribute("aria-invalid", "true"); faltando.push("a matrícula"); }
+        else { matricula.removeAttribute("aria-invalid"); }
+        if (faltando.length) {
+          caixaErro.textContent = "Informe " + faltando.join(" e ") + " do técnico " + (i + 1) + ".";
+          problemas++;
+          if (!primeiroInvalido) primeiroInvalido = faltando[0] === "o nome" ? nome : matricula;
+        } else {
+          caixaErro.textContent = "";
+        }
+      }
+
+      if (problemas) {
+        mostrarAviso("Faltam " + problemas + " campo(s). Os que faltam estão marcados em vermelho.", "erro");
+        anunciar(problemas + " campos obrigatórios não foram preenchidos.");
+        if (primeiroInvalido) primeiroInvalido.focus();
+        return false;
+      }
+      esconderAviso();
+      return true;
+    }
+
+    /* ── Pré-visualização ── */
+    function formatarDataHora(valor) {
+      var data = new Date(valor);
+      if (isNaN(data.getTime())) return valor;
+      return data.toLocaleString("pt-BR", {
+        weekday: "long", day: "2-digit", month: "2-digit", year: "numeric",
+        hour: "2-digit", minute: "2-digit"
+      });
+    }
+
+    function coletarTecnicos() {
+      var lista = [];
+      var blocos = caixaTecnicos.children;
+      for (var i = 0; i < blocos.length; i++) {
+        lista.push({
+          nome: blocos[i].querySelector(".t-nome").value.trim(),
+          matricula: blocos[i].querySelector(".t-mat").value.trim()
+        });
+      }
+      return lista;
+    }
+
+    function gerarPrevia() {
+      if (!validar()) return;
+
+      el("d-unidade").textContent = el("f-unidade").value.trim();
+      el("d-data").textContent = formatarDataHora(el("f-data").value);
+      el("d-demanda").textContent = el("f-demanda").value.trim();
+      el("d-procedimentos").textContent = el("f-procedimentos").value.trim();
+      el("d-usuario-nome").textContent = el("f-usuario-nome").value.trim();
+      el("d-usuario-mat").textContent = el("f-usuario-mat").value.trim();
+
+      var tecnicos = coletarTecnicos();
+      var tabela = el("d-tecnicos");
+      tabela.innerHTML = "";
+      var cabecalho = tabela.insertRow();
+      ["Nome", "Matrícula"].forEach(function (rotulo) {
+        var celula = document.createElement("th");
+        celula.scope = "col";
+        celula.textContent = rotulo;
+        cabecalho.appendChild(celula);
+      });
+      tecnicos.forEach(function (tecnico) {
+        var linha = tabela.insertRow();
+        linha.insertCell().textContent = tecnico.nome;
+        linha.insertCell().textContent = tecnico.matricula;
+      });
+
+      var assinaturas = el("d-assinaturas");
+      assinaturas.innerHTML = "";
+      tecnicos.forEach(function (tecnico) {
+        var linha = document.createElement("div");
+        linha.className = "linha";
+        linha.textContent = tecnico.nome;
+        var detalhe = document.createElement("small");
+        detalhe.textContent = "Técnico · Mat. " + tecnico.matricula;
+        linha.appendChild(detalhe);
+        assinaturas.appendChild(linha);
+      });
+      var linhaUsuario = document.createElement("div");
+      linhaUsuario.className = "linha";
+      linhaUsuario.textContent = el("f-usuario-nome").value.trim();
+      var detalheUsuario = document.createElement("small");
+      detalheUsuario.textContent = "Usuário atendido · Mat. " + el("f-usuario-mat").value.trim();
+      linhaUsuario.appendChild(detalheUsuario);
+      assinaturas.appendChild(linhaUsuario);
+
+      previaSecao.classList.add("on");
+      btnImprimir.disabled = false;
+      mostrarAviso("Pré-visualização gerada. Confira os dados e use “Imprimir / salvar em PDF”.", "ok");
+      anunciar("Pré-visualização gerada abaixo do formulário.");
+      previaSecao.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    /* ── Limpar, com confirmação na própria página ── */
+    function pedirConfirmacaoLimpeza() {
+      aviso.className = "aviso on pergunta";
+      aviso.innerHTML = "";
+      var texto = document.createElement("span");
+      texto.textContent = "Apagar tudo o que foi digitado? Não dá para desfazer.";
+      var caixa = document.createElement("div");
+      caixa.className = "confirma";
+      var sim = document.createElement("button");
+      sim.type = "button";
+      sim.className = "perigo";
+      sim.textContent = "Sim, apagar tudo";
+      var nao = document.createElement("button");
+      nao.type = "button";
+      nao.textContent = "Cancelar";
+      caixa.appendChild(sim);
+      caixa.appendChild(nao);
+      aviso.appendChild(texto);
+      aviso.appendChild(caixa);
+      sim.addEventListener("click", limpar);
+      nao.addEventListener("click", function () {
+        esconderAviso();
+        btnLimpar.focus();
+        anunciar("Limpeza cancelada.");
+      });
+      sim.focus();
+      anunciar("Confirme se deseja apagar todo o formulário.");
+    }
+
+    function limpar() {
+      formulario.reset();
+      OBRIGATORIOS.forEach(function (item) { limparErro(el(item[0]), el(item[1])); });
+      caixaTecnicos.innerHTML = "";
+      contadorTecnicos = 0;
+      adicionarTecnico(false);
+      previaSecao.classList.remove("on");
+      btnImprimir.disabled = true;
+      definirDataAgora();
+      mostrarAviso("Formulário limpo.", "ok");
+      anunciar("Formulário limpo.");
+      el("f-unidade").focus();
+    }
+
+    function definirDataAgora() {
+      var agora = new Date();
+      var deslocado = new Date(agora.getTime() - agora.getTimezoneOffset() * 60000);
+      el("f-data").value = deslocado.toISOString().slice(0, 16);
+    }
+
+    formulario.addEventListener("submit", function (e) { e.preventDefault(); gerarPrevia(); });
+    el("btn-add-tecnico").addEventListener("click", function () { adicionarTecnico(true); });
+    btnImprimir.addEventListener("click", function () { window.print(); });
+    btnLimpar.addEventListener("click", pedirConfirmacaoLimpeza);
+
+    formulario.addEventListener("input", function (e) {
+      var alvo = e.target;
+      if (alvo.getAttribute("aria-invalid") === "true" && alvo.value.trim()) {
+        alvo.removeAttribute("aria-invalid");
+        var caixaErro = alvo.closest(".campo") ? alvo.closest(".campo").querySelector(".erro-campo") : null;
+        if (caixaErro) caixaErro.textContent = "";
+      }
+    });
+
+    adicionarTecnico(false);
+    definirDataAgora();
+  </script>
+</body>
+</html>
