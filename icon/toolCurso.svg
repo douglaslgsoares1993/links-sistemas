@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Curso / capacitação">
+  <polygon points="50,18 90,38 50,58 10,38" fill="#0d0d0d" stroke="#c9a14a" stroke-width="3.5" stroke-linejoin="round"/>
+  <path d="M26 47v18c0 7 11 13 24 13s24-6 24-13V47" fill="none" stroke="#c9a14a" stroke-width="3.5" stroke-linejoin="round"/>
+  <path d="M84 41v24" stroke="#e0bf6d" stroke-width="3.5" stroke-linecap="round"/>
+  <circle cx="84" cy="69" r="5" fill="#e0bf6d"/>
+  <circle cx="50" cy="38" r="3" fill="#e0bf6d"/>
+</svg>

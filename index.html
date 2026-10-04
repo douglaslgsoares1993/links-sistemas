@@ -75,6 +75,8 @@
   }
   .sec-title .bar{width:6px;height:20px;background:var(--gold);border-radius:2px}
   .sec-title.hot{border-bottom-color:var(--gold-light)}
+  .sec-note{margin:-8px 0 16px;font-size:.82rem;line-height:1.5;color:var(--muted)}
+  .sec-note p{margin:0 0 4px}
 
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px}
   .card{
@@ -167,6 +169,7 @@
       <a href="#downloads">Downloads</a>
       <a href="#ler">Provedores (LER)</a>
       <a href="#links">Links Úteis</a>
+      <a href="#cursos">Cursos & Progressão</a>
       <a href="#dti">DTI</a>
       <a href="#geral">Geral</a>
       <a href="#todos">A–Z</a>
@@ -180,7 +183,7 @@
   <footer>
     <div class="stripe"></div>
     Sistemas PCPE — acesso rápido aos sistemas da Polícia Civil de Pernambuco.
-    <div class="updated">atualizado em 05/08/2026 · versão 2026.08.05.1</div>
+    <div class="updated">atualizado em 04/10/2026 · versão 2026.10.04.1</div>
   </footer>
 
   <script>
@@ -203,6 +206,7 @@
         {n:"SIGEPE (Material de Expediente)", u:"http://www.sigepe.pe.gov.br/sgnet/webSIGPaginaPrincipal.aspx", img:"toolGov.svg",
          k:"material de expediente almoxarifado suprimento pedido compra sgnet"}
       ]},
+      // fim de Mais Úteis: bloco protegido por hash em tools/CONTRATO_SITE.json
 
       { id:"ferramentas", title:"Ferramentas & Guias", items:[
         {n:"Multas de Viaturas", u:"multas.html", img:"toolGov.svg", internal:true},
@@ -291,6 +295,24 @@
          k:"senha forte segura password gerar"}
       ]},
 
+      { id:"cursos", title:"Cursos & Progressão", notes:[
+        "Para fins de progressão funcional, consulte sempre a portaria vigente da PCPE e verifique os requisitos do curso e do certificado (carga horária e datas).",
+        "Sugestões na EV.G (procurar pelo nome): Desvendando a Inteligência Artificial na Administração Pública; Inteligência Artificial no Contexto do Serviço Público; Nova Lei de Licitações e Contratos: aspectos gerais e pontos de atenção."
+      ], items:[
+        {n:"EV.G (Escola Virtual Gov / ENAP)", u:"https://www.escolavirtual.gov.br/", img:"toolCurso.svg",
+         k:"evg enap escola virtual governo curso cursos capacitacao certificado progressao servidor publico inteligencia artificial ia licitacao licitacoes contratos sei lgpd excel libras direitos humanos lavagem"},
+        {n:"EaD SENASP", u:"https://www.gov.br/mj/pt-br/assuntos/sua-seguranca/seguranca-publica/dep/ead-senasp", img:"toolCurso.svg",
+         k:"senasp susp seguranca publica policial curso cursos capacitacao certificado progressao ead"},
+        {n:"EGAPE (Escola de Governo PE)", u:"https://www.egape.pe.gov.br/", img:"toolCurso.svg",
+         k:"egape pernambuco escola de governo servidor curso cursos capacitacao certificado progressao"},
+        {n:"Saberes (Senado / ILB)", u:"https://saberes.senado.leg.br/", img:"toolCurso.svg",
+         k:"senado ilb instituto legislativo brasileiro saberes curso cursos capacitacao certificado progressao"},
+        {n:"Escola de Contas (TCE-PE)", u:"https://escola.tce.pe.gov.br/", img:"toolCurso.svg",
+         k:"tce tcepe tribunal de contas escola de contas curso cursos capacitacao licitacao administracao publica controle progressao"},
+        {n:"ABELINE (Cursos EAD)", u:"https://www.cursosabeline.com.br/", img:"toolCurso.svg",
+         k:"abeline curso cursos ead certificado progressao"}
+      ]},
+
       { id:"dti", title:"DTI", items:[
         {n:"Plantão DTI", u:"https://wa.me/5581994884114/", img:"whatsApp.png"},
         {n:"DTI Dinter 1", u:"https://wa.me/5581994887049/", img:"whatsApp.png"},
@@ -326,6 +348,16 @@
       s.id = sec.id;
       const star = sec.hot ? "★ " : "";
       s.innerHTML = `<div class="sec-title${sec.hot ? " hot" : ""}"><span class="bar"></span>${star}${sec.title}</div>`;
+      if (sec.notes) {
+        const note = document.createElement("div");
+        note.className = "sec-note";
+        sec.notes.forEach(txt => {
+          const p = document.createElement("p");
+          p.textContent = txt;
+          note.appendChild(p);
+        });
+        s.appendChild(note);
+      }
       const g = document.createElement("div");
       g.className = "grid" + (sec.hot ? " hot" : "");
       sec.items.forEach((it, index) => {
@@ -349,7 +381,7 @@
     });
 
     // ── Índice A–Z (gerado de todos os itens) ──
-    const secOf = {uteis:"Mais Úteis", ferramentas:"Ferramenta", consultas:"OSINT", downloads:"Download", ler:"LER", links:"Útil", dti:"DTI", geral:"Geral"};
+    const secOf = {uteis:"Mais Úteis", ferramentas:"Ferramenta", consultas:"OSINT", downloads:"Download", ler:"LER", links:"Útil", cursos:"Curso", dti:"DTI", geral:"Geral"};
     const all = [];
     data.forEach(sec => sec.items.forEach(it => { if (it.n && it.u) all.push({n:it.n, u:it.u, k:it.k||"", tag:secOf[sec.id]||"", internal:!!it.internal}); }));
     all.sort((a,b) => a.n.localeCompare(b.n, "pt", {sensitivity:"base"}));
