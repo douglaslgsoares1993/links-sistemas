@@ -1,10 +1,10 @@
 {
-  "version": "2026.08.05.1",
-  "links": 93,
-  "externalLinks": 87,
+  "version": "2026.10.04.1",
+  "links": 99,
+  "externalLinks": 93,
   "internalLinks": 6,
   "subheads": 7,
-  "sections": 8,
+  "sections": 9,
   "sectionIds": [
     "uteis",
     "ferramentas",
@@ -12,9 +12,10 @@
     "downloads",
     "ler",
     "links",
+    "cursos",
     "dti",
     "geral"
   ],
-  "dataSha256": "d36f4b7ef8cbdd089920b3bd26731d39d8a247f67004007e1da6299ed11f910c",
-  "maisUteisSha256": "055ca275591e724e1345df5b21dec34bb93deb9051bb7287e9210dcca6bf1baa"
+  "dataSha256": "b66475f53fb81ec84d15f4c4b65cb838c17b73288edb056dbd7f0eb72d976ec2",
+  "maisUteisSha256": "4b9f93eb4b86118b9b11316f13d21f92df4db36d5b143a2af7788bcb7ca8348c"
 }
